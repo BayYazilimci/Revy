@@ -1,0 +1,127 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Product",
+      "url": "https://www.emlakjet.com/ilan/seba-suites-11-yuksek-kat-buyuk-teras-vadi-metro-19209111",
+      "name": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro",
+      "description": "'dan, Kağıthane Seba Suites'te eşyalı 1+1 kiralık daire!Seba Suites projesinde yer alan bu modern 1+1 daire, konforlu ve prestijli bir yaşam alanı sunmaktadır. 75m² net ve 120m² brüt kullanım alanına sahip daire, 11. katta bulunmakta olup, merkezi ısıtma sistemi (pay ölçer) ile donatılmıştır. Açık Amerikan mutfak, 1 banyo ve duşakabinli geniş bir banyo bulunmaktadır. Daire, kiracılı durumda olup, yatırım potansiyeli de taşımaktadır.Site içerisinde sunulan olanaklar:Açık yüzme havuzu ve spor alanlarıModern fitness salonuPeyzajlı ve çocuk oyun alanlarıGeniş yeşil alanlarGüvenlik ve Konfor:7/24 profesyonel güvenlik hizmetiAçık ve kapalı otopark imkanıJeneratör ve hidrofor sistemleriYangın merdiveni ve engelliye uygun asansörGeniş koridorlar ve ferah bir yaşam alanıDaire İçerisinde Bulunan Eşyalar:BuzdolabıBulaşık MakinesiSet Üstü OcakKlimaTüm mutfak gereçleri ve oturma grubuLokasyon Avantajları:Seba Suites, Kağıthane'nin merkezi konumunda yer almakta olup, çevresinde birçok sosyal donatı alanı bulunmaktadır:Alışveriş merkezleri, marketler ve eczaneler yürüme mesafesindeOkullar, polis merkezleri ve devlet hastanesine kolay ulaşımAna caddeye yakınlığı sayesinde şehir içi ulaşım ağlarına erişim kolaylığıDetaylı bilgi ve daireyi görmek için lütfen iletişime geçin.",
+      "image": [
+        "https://imaj.emlakjet.com/listing/19209111/CCB3919F2B4972686D31D2EBA0C8341919209111.jpg",
+        "https://imaj.emlakjet.com/listing/19209111/E9B4E233B72AA91CE0430D02CC13377A19209111.jpg",
+        "https://imaj.emlakjet.com/listing/19209111/80890837E421014536E18F57B9FBB57219209111.jpg",
+        "https://imaj.emlakjet.com/listing/19209111/CEFCE66D6DC7CB98D982ACA4084E8F5019209111.jpg",
+        "https://imaj.emlakjet.com/listing/19209111/0057390C2D5D749247E4E34055D3BFDC19209111.jpg",
+        "https://imaj.emlakjet.com/listing/19209111/189043CB0A3FF0D8163209C3C5AF693B19209111.jpg",
+        "https://imaj.emlakjet.com/listing/19209111/5303D790EB55BB20D010BF240E17067919209111.jpg",
+        "https://imaj.emlakjet.com/listing/19209111/236B2FFE03AF975B3516C72CC989B10419209111.jpg",
+        "https://imaj.emlakjet.com/listing/19209111/490AB52D6190CF2FDED3B843D4B0FFE519209111.jpg",
+        "https://imaj.emlakjet.com/listing/19209111/C1D3A4B657451656E7A166E5E70CCD1519209111.jpg"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.emlakjet.com/ilan/seba-suites-11-yuksek-kat-buyuk-teras-vadi-metro-19209111",
+        "price": 65000,
+        "priceCurrency": "TRY",
+        "availability": "https://schema.org/InStock",
+        "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
+        "itemOffered": {
+          "@id": "https://www.emlakjet.com/ilan/seba-suites-11-yuksek-kat-buyuk-teras-vadi-metro-19209111#listing"
+        },
+        "hasMerchantReturnPolicy": {
+          "@type": "MerchantReturnPolicy",
+          "applicableCountry": "TR",
+          "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+        }
+      }
+    },
+    {
+      "@type": "RealEstateListing",
+      "@id": "https://www.emlakjet.com/ilan/seba-suites-11-yuksek-kat-buyuk-teras-vadi-metro-19209111#listing",
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "İlan Numarası",
+        "value": "19209111"
+      },
+      "dateModified": "2026-06-17T21:32:10Z",
+      "itemOffered": {
+        "@type": "Residence",
+        "numberOfRooms": 2,
+        "floorSize": {
+          "@type": "QuantitativeValue",
+          "value": 0,
+          "unitCode": "MTK"
+        },
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "İlan Numarası",
+            "value": "19209111"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "İlan Güncelleme Tarihi",
+            "value": "17 Haziran 2026"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Kategori",
+            "value": "Kiralık Daire"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Isıtma Tipi",
+            "value": "Merkezi (Pay Ölçer)"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Otopark",
+            "value": "Yok"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Kullanım Durumu",
+            "value": "Boş"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Site İçerisinde",
+            "value": "Hayır"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Tapu Durumu",
+            "value": "Kat Mülkiyeti"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Takas",
+            "value": "Yok"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Asansör",
+            "value": "Yok"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Mutfak",
+            "value": "Kapalı"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Eşya Durumu",
+            "value": "Eşyalı"
+          }
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "TR",
+        "streetAddress": "Merkez Mahallesi",
+        "addressLocality": "Kağıthane",
+        "addressRegion": "İstanbul"
+      }
+    }
+  ]
+}
