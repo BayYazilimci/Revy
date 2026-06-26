@@ -1,0 +1,858 @@
+{
+  "id": "19209111",
+  "title": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro",
+  "slug": "seba-suites-11-yuksek-kat-buyuk-teras-vadi-metro-19209111",
+  "url": "/ilan/seba-suites-11-yuksek-kat-buyuk-teras-vadi-metro-19209111",
+  "description": "$a3",
+  "transactionType": "rent",
+  "propertyType": "residential",
+  "categoryTypeName": "$undefined",
+  "estateTypeName": "$undefined",
+  "price": {
+    "amount": 65000,
+    "currency": "TRY",
+    "pricePerSqm": 0,
+    "previousPrice": "$undefined"
+  },
+  "location": {
+    "city": {
+      "id": 34,
+      "name": "İstanbul",
+      "slug": "istanbul"
+    },
+    "district": {
+      "id": 1810,
+      "name": "Kağıthane",
+      "slug": "istanbul-kagithane",
+      "cityId": 34
+    },
+    "neighborhood": {
+      "id": 140543,
+      "name": "Merkez Mahallesi",
+      "slug": "istanbul-kagithane-merkez-mahallesi",
+      "districtId": 1810
+    },
+    "coordinates": {
+      "lat": 41.083738531664125,
+      "lng": 28.977358372506984
+    },
+    "address": "Kağıthane - Merkez Mahallesi"
+  },
+  "features": {
+    "rooms": "1+1",
+    "grossArea": 0
+  },
+  "images": [
+    {
+      "id": "19209111-0",
+      "url": "https://imaj.emlakjet.com/listing/19209111/CCB3919F2B4972686D31D2EBA0C8341919209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 1"
+    },
+    {
+      "id": "19209111-1",
+      "url": "https://imaj.emlakjet.com/listing/19209111/E9B4E233B72AA91CE0430D02CC13377A19209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 2"
+    },
+    {
+      "id": "19209111-2",
+      "url": "https://imaj.emlakjet.com/listing/19209111/80890837E421014536E18F57B9FBB57219209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 3"
+    },
+    {
+      "id": "19209111-3",
+      "url": "https://imaj.emlakjet.com/listing/19209111/CEFCE66D6DC7CB98D982ACA4084E8F5019209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 4"
+    },
+    {
+      "id": "19209111-4",
+      "url": "https://imaj.emlakjet.com/listing/19209111/0057390C2D5D749247E4E34055D3BFDC19209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 5"
+    },
+    {
+      "id": "19209111-5",
+      "url": "https://imaj.emlakjet.com/listing/19209111/189043CB0A3FF0D8163209C3C5AF693B19209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 6"
+    },
+    {
+      "id": "19209111-6",
+      "url": "https://imaj.emlakjet.com/listing/19209111/5303D790EB55BB20D010BF240E17067919209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 7"
+    },
+    {
+      "id": "19209111-7",
+      "url": "https://imaj.emlakjet.com/listing/19209111/236B2FFE03AF975B3516C72CC989B10419209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 8"
+    },
+    {
+      "id": "19209111-8",
+      "url": "https://imaj.emlakjet.com/listing/19209111/490AB52D6190CF2FDED3B843D4B0FFE519209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 9"
+    },
+    {
+      "id": "19209111-9",
+      "url": "https://imaj.emlakjet.com/listing/19209111/C1D3A4B657451656E7A166E5E70CCD1519209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 10"
+    },
+    {
+      "id": "19209111-10",
+      "url": "https://imaj.emlakjet.com/listing/19209111/E77F50EFDDF0B0C88119AC4A221D916919209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 11"
+    },
+    {
+      "id": "19209111-11",
+      "url": "https://imaj.emlakjet.com/listing/19209111/383DE878C221B1B2EB8AB9DFB672450519209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 12"
+    },
+    {
+      "id": "19209111-12",
+      "url": "https://imaj.emlakjet.com/listing/19209111/A3CE3BEFC19DEAEE70204336DCF0D22D19209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 13"
+    },
+    {
+      "id": "19209111-13",
+      "url": "https://imaj.emlakjet.com/listing/19209111/53D04A8CA5DAF32BCB4D5C8F57298A2F19209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 14"
+    },
+    {
+      "id": "19209111-14",
+      "url": "https://imaj.emlakjet.com/listing/19209111/EE1A07585348F73BE07C6373DCFEF5C219209111.jpg",
+      "alt": "Seba Suites 1+1 Yüksek Kat Büyük Teras Vadi Metro - 15"
+    }
+  ],
+  "videoUrl": "$undefined",
+  "virtualTourUrl": "$undefined",
+  "streetView": {
+    "available": true
+  },
+  "agent": {
+    "id": 361851,
+    "memberId": 370069,
+    "name": "Osman İnal",
+    "slug": "arman-yatirim-gayrimenkul-danismanlik-361851",
+    "type": "corporate",
+    "membershipLevel": "hesabını bilen",
+    "avatar": "$undefined",
+    "companyName": "ARMAN YATIRIM GAYRİMENKUL DANIŞMANLIK",
+    "companyLogo": "$undefined",
+    "contact": {
+      "hasPhone": true,
+      "phone": "$undefined",
+      "whatsapp": "$undefined",
+      "whatsappDeeplinkUrl": "https://wa.me/905517254530?text=Merhaba%2C%20Emlakjet%27teki%2019209111%20no%27lu%20ilan%C4%B1n%C4%B1z%20hakk%C4%B1nda%20bilgi%20alabilir%20miyim%3F%20https%3A%2F%2Fwww.emlakjet.com%2Filan%2Fseba-suites-11-yuksek-kat-buyuk-teras-vadi-metro-19209111"
+    },
+    "yearsActive": 2,
+    "licenseNo": "3404229",
+    "memberLicenseNo": "",
+    "isVerified": true
+  },
+  "breadcrumbs": [
+    {
+      "id": 0,
+      "name": "Anasayfa",
+      "h1": "Emlakjet",
+      "slug": "",
+      "type": "city",
+      "url": "/"
+    },
+    {
+      "id": 1,
+      "name": "Kiralık Daire",
+      "h1": "Kiralık Daire",
+      "slug": "kiralik-daire",
+      "type": "district",
+      "url": "/kiralik-daire"
+    },
+    {
+      "id": 2,
+      "name": "İstanbul Kiralık Daire",
+      "h1": "İstanbul Kiralık Daire",
+      "slug": "istanbul",
+      "type": "neighborhood",
+      "url": "/kiralik-daire/istanbul"
+    },
+    {
+      "id": 3,
+      "name": "Kağıthane Kiralık Daire",
+      "h1": "İstanbul Kağıthane Kiralık Daire",
+      "slug": "istanbul-kagithane",
+      "type": "neighborhood",
+      "url": "/kiralik-daire/istanbul-kagithane"
+    },
+    {
+      "id": 4,
+      "name": "Merkez Mahallesi Kiralık Daire",
+      "h1": "Kağıthane Merkez Mahallesi Kiralık Daire",
+      "slug": "istanbul-kagithane-merkez-mahallesi",
+      "type": "neighborhood",
+      "url": "/kiralik-daire/istanbul-kagithane-merkez-mahallesi"
+    },
+    {
+      "id": 5,
+      "name": "Seba suites 1+1 yüksek kat büyük teras Vadi metro",
+      "h1": "Seba suites 1+1 yüksek kat büyük teras Vadi metro",
+      "slug": "seba-suites-11-yuksek-kat-buyuk-teras-vadi-metro-19209111",
+      "type": "neighborhood",
+      "url": "/ilan/seba-suites-11-yuksek-kat-buyuk-teras-vadi-metro-19209111"
+    }
+  ],
+  "createdAt": "2026-04-09T10:00:34Z",
+  "updatedAt": "2026-06-17T21:32:10Z",
+  "seoTitle": "Arman Yatirim Gayri̇menkul Danişmanlik İstanbul Kağıthane Merkez Mahallesi 1+1 Oda Kiralık Daire 65,000 TL #19209111",
+  "seoDescription": "Arman Yatirim Gayri̇menkul Danişmanlik İstanbul Kağıthane Merkez Mahallesi 120 m² 1+1 Oda 65,000 TL Kiralık Daire  ilanı Emlakjet.com'da. #19209111",
+  "canonicalUrl": "/ilan/seba-suites-11-yuksek-kat-buyuk-teras-vadi-metro-19209111",
+  "endeksaTrendParams": {
+    "propertyCategory": 1,
+    "propertyType": 4,
+    "buildYear": "$undefined",
+    "rooms": "$undefined",
+    "floorNumber": "$undefined",
+    "heatType": "$undefined"
+  },
+  "badges": [],
+  "extraBadges": "$undefined",
+  "properties": [
+    {
+      "name": "İlan Numarası",
+      "value": "19209111"
+    },
+    {
+      "name": "İlan Güncelleme Tarihi",
+      "value": "17 Haziran 2026"
+    },
+    {
+      "name": "Kategori",
+      "value": "Kiralık Daire"
+    },
+    {
+      "name": "Isıtma Tipi",
+      "value": "Merkezi (Pay Ölçer)"
+    },
+    {
+      "name": "Otopark",
+      "value": "Yok"
+    },
+    {
+      "name": "Kullanım Durumu",
+      "value": "Boş"
+    },
+    {
+      "name": "Site İçerisinde",
+      "value": "Hayır"
+    },
+    {
+      "name": "Tapu Durumu",
+      "value": "Kat Mülkiyeti"
+    },
+    {
+      "name": "Takas",
+      "value": "Yok"
+    },
+    {
+      "name": "Asansör",
+      "value": "Yok"
+    },
+    {
+      "name": "Mutfak",
+      "value": "Kapalı"
+    },
+    {
+      "name": "Eşya Durumu",
+      "value": "Eşyalı"
+    }
+  ],
+  "quickInfos": [
+    {
+      "name": "Oda Sayısı",
+      "value": "1+1"
+    },
+    {
+      "name": "Banyo Sayısı",
+      "value": "1"
+    },
+    {
+      "name": "Bulunduğu Kat",
+      "value": "11.Kat"
+    },
+    {
+      "name": "Binanın Kat Sayısı",
+      "value": "15"
+    },
+    {
+      "name": "Brüt / Net",
+      "value": "120 m² / 75 m²"
+    },
+    {
+      "name": "Binanın Yaşı",
+      "value": "6-10"
+    }
+  ],
+  "additionalFeatures": [],
+  "attributes": {},
+  "isEidsVerified": true,
+  "viewCount": "$undefined",
+  "priceHistory": [
+    {
+      "date": "2026-04-09T11:07:20Z",
+      "price": 65000,
+      "currency": "TRY"
+    }
+  ],
+  "priceDetail": {
+    "trendType": "$undefined",
+    "firstPrice": 65000,
+    "differenceRate": 0,
+    "discountRate": 0
+  },
+  "endeksaValuation": {
+    "price": "$undefined",
+    "minPrice": "$undefined",
+    "maxPrice": "$undefined",
+    "rentPrice": "$undefined",
+    "rentMin": "$undefined",
+    "rentMax": "$undefined",
+    "yearsOfRoi": "$undefined",
+    "updatedAt": "$undefined",
+    "investmentParameters": "$undefined"
+  },
+  "endeksaValuationView": "$undefined",
+  "displaySettings": {
+    "show_on_map": true,
+    "show_valuation": true,
+    "show_investment_score": true
+  },
+  "tradeType": {
+    "key": "rent",
+    "typeId": 6
+  },
+  "earthquakeRiskScore": 0.351,
+  "earthquakeRiskColor": null,
+  "neighborhoodGeometry": {
+    "type": "multipolygon",
+    "coordinates": [
+      [
+        [
+          [
+            28.9828694,
+            41.0881969
+          ],
+          [
+            28.9787227,
+            41.0850101
+          ],
+          [
+            28.9780803,
+            41.0856475
+          ],
+          [
+            28.9757305,
+            41.0867077
+          ],
+          [
+            28.975576,
+            41.0868486
+          ],
+          [
+            28.975015,
+            41.0876515
+          ],
+          [
+            28.9752752,
+            41.087725
+          ],
+          [
+            28.9752426,
+            41.0878905
+          ],
+          [
+            28.9746897,
+            41.0880927
+          ],
+          [
+            28.9743076,
+            41.0885278
+          ],
+          [
+            28.9741856,
+            41.0889077
+          ],
+          [
+            28.9742669,
+            41.0899618
+          ],
+          [
+            28.9741775,
+            41.090213
+          ],
+          [
+            28.9739173,
+            41.0901456
+          ],
+          [
+            28.9733237,
+            41.0896554
+          ],
+          [
+            28.9726733,
+            41.0894715
+          ],
+          [
+            28.9722667,
+            41.0896309
+          ],
+          [
+            28.9718114,
+            41.0899495
+          ],
+          [
+            28.9713235,
+            41.0900537
+          ],
+          [
+            28.9711934,
+            41.0906543
+          ],
+          [
+            28.9695835,
+            41.0922782
+          ],
+          [
+            28.969307,
+            41.0920821
+          ],
+          [
+            28.969364,
+            41.0916838
+          ],
+          [
+            28.9692176,
+            41.0914632
+          ],
+          [
+            28.9695266,
+            41.0910894
+          ],
+          [
+            28.968024558,
+            41.090485021
+          ],
+          [
+            28.96747,
+            41.08853
+          ],
+          [
+            28.96783,
+            41.08679
+          ],
+          [
+            28.96808,
+            41.08607
+          ],
+          [
+            28.96486,
+            41.08585
+          ],
+          [
+            28.96426,
+            41.08565
+          ],
+          [
+            28.96368,
+            41.08491
+          ],
+          [
+            28.96309,
+            41.08366
+          ],
+          [
+            28.962912759,
+            41.082953333
+          ],
+          [
+            28.9649943,
+            41.0819805
+          ],
+          [
+            28.9659492,
+            41.0818026
+          ],
+          [
+            28.9669577,
+            41.081382
+          ],
+          [
+            28.9679662,
+            41.0817379
+          ],
+          [
+            28.9688138,
+            41.0810828
+          ],
+          [
+            28.9688352,
+            41.0807674
+          ],
+          [
+            28.9682237,
+            41.0805167
+          ],
+          [
+            28.967419,
+            41.0798131
+          ],
+          [
+            28.966904,
+            41.0792551
+          ],
+          [
+            28.9670328,
+            41.0791176
+          ],
+          [
+            28.9667753,
+            41.0789801
+          ],
+          [
+            28.9663783,
+            41.079061
+          ],
+          [
+            28.9668933,
+            41.0786081
+          ],
+          [
+            28.9674512,
+            41.0788911
+          ],
+          [
+            28.9679929,
+            41.078621
+          ],
+          [
+            28.9672426,
+            41.0776926
+          ],
+          [
+            28.9658977,
+            41.075206
+          ],
+          [
+            28.9627124,
+            41.0719296
+          ],
+          [
+            28.9621448,
+            41.0700253
+          ],
+          [
+            28.9618973,
+            41.0697683
+          ],
+          [
+            28.9607594,
+            41.0689558
+          ],
+          [
+            28.9599138,
+            41.0686309
+          ],
+          [
+            28.9591902,
+            41.0685022
+          ],
+          [
+            28.9577022,
+            41.0685022
+          ],
+          [
+            28.9565801,
+            41.0683857
+          ],
+          [
+            28.9553767,
+            41.0681037
+          ],
+          [
+            28.9529891,
+            41.0663957
+          ],
+          [
+            28.9519492,
+            41.0658458
+          ],
+          [
+            28.9513273,
+            41.0657533
+          ],
+          [
+            28.9513159,
+            41.0651851
+          ],
+          [
+            28.9514103,
+            41.064612
+          ],
+          [
+            28.9516944,
+            41.0640318
+          ],
+          [
+            28.9535295,
+            41.0642175
+          ],
+          [
+            28.954538,
+            41.0645573
+          ],
+          [
+            28.9573704,
+            41.0658677
+          ],
+          [
+            28.9593607,
+            41.06625
+          ],
+          [
+            28.9618378,
+            41.0671235
+          ],
+          [
+            28.9636433,
+            41.0678668
+          ],
+          [
+            28.9639576,
+            41.068192
+          ],
+          [
+            28.9657892,
+            41.071526
+          ],
+          [
+            28.9683009,
+            41.0736643
+          ],
+          [
+            28.9690519,
+            41.0746429
+          ],
+          [
+            28.9695642,
+            41.0759501
+          ],
+          [
+            28.9703769,
+            41.0771673
+          ],
+          [
+            28.9708337,
+            41.0767213
+          ],
+          [
+            28.9713707,
+            41.0756335
+          ],
+          [
+            28.9716042,
+            41.0753273
+          ],
+          [
+            28.9728371,
+            41.0743767
+          ],
+          [
+            28.9732667,
+            41.0743028
+          ],
+          [
+            28.9734115,
+            41.074426
+          ],
+          [
+            28.9733134,
+            41.0766369
+          ],
+          [
+            28.9734348,
+            41.0768974
+          ],
+          [
+            28.9737571,
+            41.0770663
+          ],
+          [
+            28.9741587,
+            41.0769713
+          ],
+          [
+            28.9750553,
+            41.0763165
+          ],
+          [
+            28.9763302,
+            41.0748766
+          ],
+          [
+            28.9773708,
+            41.0730546
+          ],
+          [
+            28.9782709,
+            41.0737557
+          ],
+          [
+            28.9782709,
+            41.0740332
+          ],
+          [
+            28.9776197,
+            41.0746629
+          ],
+          [
+            28.9776056,
+            41.0753245
+          ],
+          [
+            28.9777896,
+            41.0755807
+          ],
+          [
+            28.9779029,
+            41.0760822
+          ],
+          [
+            28.9777047,
+            41.0765305
+          ],
+          [
+            28.9786107,
+            41.0779071
+          ],
+          [
+            28.9782426,
+            41.0785154
+          ],
+          [
+            28.9783134,
+            41.0795825
+          ],
+          [
+            28.9785682,
+            41.079796
+          ],
+          [
+            28.9775065,
+            41.0807244
+          ],
+          [
+            28.9776622,
+            41.0815994
+          ],
+          [
+            28.9767562,
+            41.0828265
+          ],
+          [
+            28.9770782,
+            41.0833628
+          ],
+          [
+            28.9782072,
+            41.0824931
+          ],
+          [
+            28.9804228,
+            41.0820049
+          ],
+          [
+            28.981527,
+            41.0821756
+          ],
+          [
+            28.9822632,
+            41.0825171
+          ],
+          [
+            28.9830559,
+            41.0830826
+          ],
+          [
+            28.9840469,
+            41.0835308
+          ],
+          [
+            28.9853493,
+            41.0843631
+          ],
+          [
+            28.9851868,
+            41.0845566
+          ],
+          [
+            28.9835606,
+            41.0855004
+          ],
+          [
+            28.9830809,
+            41.0860519
+          ],
+          [
+            28.9830158,
+            41.0870141
+          ],
+          [
+            28.9832841,
+            41.0878537
+          ],
+          [
+            28.9828694,
+            41.0881969
+          ]
+        ]
+      ]
+    ]
+  },
+  "bffCadastre": null,
+  "bffZoning": null,
+  "bffFellowCountryMan": [
+    {
+      "CitizenCity": "İSTANBUL",
+      "CountOf": 3904
+    },
+    {
+      "CitizenCity": "SİVAS",
+      "CountOf": 3570
+    },
+    {
+      "CitizenCity": "SAMSUN",
+      "CountOf": 1458
+    },
+    {
+      "CitizenCity": "ORDU",
+      "CountOf": 1453
+    },
+    {
+      "CitizenCity": "KASTAMONU",
+      "CountOf": 1418
+    },
+    {
+      "CitizenCity": "SİİRT",
+      "CountOf": 1135
+    },
+    {
+      "CitizenCity": "BİTLİS",
+      "CountOf": 975
+    },
+    {
+      "CitizenCity": "GİRESUN",
+      "CountOf": 951
+    },
+    {
+      "CitizenCity": "ERZİNCAN",
+      "CountOf": 938
+    },
+    {
+      "CitizenCity": "GÜMÜŞHANE",
+      "CountOf": 768
+    }
+  ]
+}

@@ -1,0 +1,1596 @@
+{
+  "id": "19524130",
+  "title": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire",
+  "slug": "sonmez-gayrimenkul-den-carsi-merkezinden-31-kiralik-daire-19524130",
+  "url": "/ilan/sonmez-gayrimenkul-den-carsi-merkezinden-31-kiralik-daire-19524130",
+  "description": "<p>ÃARÅI MERKEZÄ°NDE OKULLARA YAKIN BÃLGEDE <br>3+1<br>DOÄALGAZLI<br>KOMBÄ°LÄ°<br>PETEKLÄ°<br>HÄ°DROFORLU<br>ARA KAT<br>GENÄ°Å OTURUMLU KÄ°RALIK <u>DAÄ°RE</u></p>",
+  "transactionType": "rent",
+  "propertyType": "residential",
+  "categoryTypeName": "$undefined",
+  "estateTypeName": "$undefined",
+  "price": {
+    "amount": 25000,
+    "currency": "TRY",
+    "pricePerSqm": 0,
+    "previousPrice": "$undefined"
+  },
+  "location": {
+    "city": {
+      "id": 31,
+      "name": "Hatay",
+      "slug": "hatay"
+    },
+    "district": {
+      "id": 1289,
+      "name": "DÃ¶rtyol",
+      "slug": "hatay-dortyol",
+      "cityId": 31
+    },
+    "neighborhood": {
+      "id": 131169,
+      "name": "YeÅil Mahallesi",
+      "slug": "hatay-dortyol-yesil-mahallesi",
+      "districtId": 1289
+    },
+    "coordinates": {
+      "lat": 36.83689777597608,
+      "lng": 36.23127032071352
+    },
+    "address": "DÃ¶rtyol - YeÅil Mahallesi"
+  },
+  "features": {
+    "rooms": "3+1",
+    "grossArea": 0
+  },
+  "images": [
+    {
+      "id": "19524130-0",
+      "url": "https://imaj.emlakjet.com/listing/19524130/E52718E8D0A3D9769B68822DAF2C573B19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 1"
+    },
+    {
+      "id": "19524130-1",
+      "url": "https://imaj.emlakjet.com/listing/19524130/9B4AB16C0D89C5A2007AA5786FEC336B19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 2"
+    },
+    {
+      "id": "19524130-2",
+      "url": "https://imaj.emlakjet.com/listing/19524130/90AC9F328B0A9ED37193B23282EFA5DD19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 3"
+    },
+    {
+      "id": "19524130-3",
+      "url": "https://imaj.emlakjet.com/listing/19524130/0002905938E5ADEBD06E3EF5D1C6D1B219524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 4"
+    },
+    {
+      "id": "19524130-4",
+      "url": "https://imaj.emlakjet.com/listing/19524130/BC3ACA3A1CFCAAADB5882D77E97BB58B19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 5"
+    },
+    {
+      "id": "19524130-5",
+      "url": "https://imaj.emlakjet.com/listing/19524130/75629308CCD52EF50C3E27D67E93BC3A19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 6"
+    },
+    {
+      "id": "19524130-6",
+      "url": "https://imaj.emlakjet.com/listing/19524130/16D2AF27176C1477116FA6148DFB0D4619524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 7"
+    },
+    {
+      "id": "19524130-7",
+      "url": "https://imaj.emlakjet.com/listing/19524130/D6AA0DD3763B589B540538AB4C3F250E19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 8"
+    },
+    {
+      "id": "19524130-8",
+      "url": "https://imaj.emlakjet.com/listing/19524130/C491AFD0B5D631E468A78A0E274A1F3519524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 9"
+    },
+    {
+      "id": "19524130-9",
+      "url": "https://imaj.emlakjet.com/listing/19524130/F23E9E6A856EF60DCCD1F606A828184419524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 10"
+    },
+    {
+      "id": "19524130-10",
+      "url": "https://imaj.emlakjet.com/listing/19524130/74E6907EE5BC97400AE741D7A8D5164119524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 11"
+    },
+    {
+      "id": "19524130-11",
+      "url": "https://imaj.emlakjet.com/listing/19524130/5109D05C52AD9ABDD0DA444A1D05505C19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 12"
+    },
+    {
+      "id": "19524130-12",
+      "url": "https://imaj.emlakjet.com/listing/19524130/9AF18A870008BFA6AC02791EA3F9EF5419524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 13"
+    },
+    {
+      "id": "19524130-13",
+      "url": "https://imaj.emlakjet.com/listing/19524130/996870FEABC4DEAC0342FA17E70C461519524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 14"
+    },
+    {
+      "id": "19524130-14",
+      "url": "https://imaj.emlakjet.com/listing/19524130/53CD5CADC42ECC5579795A2AB7D29BED19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 15"
+    },
+    {
+      "id": "19524130-15",
+      "url": "https://imaj.emlakjet.com/listing/19524130/3A51EBC0A167174093C33D861EB8A6C719524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 16"
+    },
+    {
+      "id": "19524130-16",
+      "url": "https://imaj.emlakjet.com/listing/19524130/C3D2CE8C9BF8498BCAC1CC682ECFC1EA19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 17"
+    },
+    {
+      "id": "19524130-17",
+      "url": "https://imaj.emlakjet.com/listing/19524130/5100170BF5EF2CABDBEE620EA2E1F73E19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 18"
+    },
+    {
+      "id": "19524130-18",
+      "url": "https://imaj.emlakjet.com/listing/19524130/2AD1B97288C60FED2BFDF07E6CCD1F7319524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 19"
+    },
+    {
+      "id": "19524130-19",
+      "url": "https://imaj.emlakjet.com/listing/19524130/B12D79141EC461FBFAB4B304FFBD3F1019524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 20"
+    },
+    {
+      "id": "19524130-20",
+      "url": "https://imaj.emlakjet.com/listing/19524130/CA2AB1C81D31BD444A05E42EDBD0F8BA19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 21"
+    },
+    {
+      "id": "19524130-21",
+      "url": "https://imaj.emlakjet.com/listing/19524130/76A782B39A35C155BFC6157D97CD1A9619524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 22"
+    },
+    {
+      "id": "19524130-22",
+      "url": "https://imaj.emlakjet.com/listing/19524130/81B77719C9447C9AAE91A89D3877D3AE19524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 23"
+    },
+    {
+      "id": "19524130-23",
+      "url": "https://imaj.emlakjet.com/listing/19524130/3745475C7DB59AB229E6FCF6959F918719524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 24"
+    },
+    {
+      "id": "19524130-24",
+      "url": "https://imaj.emlakjet.com/listing/19524130/74E5BE6CCC0EFF6B8163F35ED9000E9319524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 25"
+    },
+    {
+      "id": "19524130-25",
+      "url": "https://imaj.emlakjet.com/listing/19524130/542C4B953632EA08FE212D24EEB4962719524130.jpg",
+      "alt": "SÃ¶nmez Gayrimenkul'den ÃarÅÄ± Merkezinden 3+1 KiralÄ±k Daire - 26"
+    }
+  ],
+  "videoUrl": "$undefined",
+  "virtualTourUrl": "$undefined",
+  "streetView": {
+    "available": true
+  },
+  "agent": {
+    "id": 2285112,
+    "memberId": 2379769,
+    "name": "SÃNMEZ YAPI GAYRÄ°MENKUL",
+    "slug": "sonmez-yapi-gayrimenkul-2285112",
+    "type": "corporate",
+    "membershipLevel": "pro ofis",
+    "avatar": "$undefined",
+    "companyName": "SÃNMEZ YAPI GAYRÄ°MENKUL",
+    "companyLogo": "$undefined",
+    "contact": {
+      "hasPhone": true,
+      "phone": "$undefined",
+      "whatsapp": "$undefined",
+      "whatsappDeeplinkUrl": "https://wa.me/905517254530?text=Merhaba%2C%20Emlakjet%27teki%2019524130%20no%27lu%20ilan%C4%B1n%C4%B1z%20hakk%C4%B1nda%20bilgi%20alabilir%20miyim%3F%20https%3A%2F%2Fwww.emlakjet.com%2Filan%2Fsonmez-gayrimenkulden-carsi-merkezinden-31-kiralik-daire-19524130"
+    },
+    "yearsActive": 1,
+    "licenseNo": "3100846",
+    "memberLicenseNo": "",
+    "isVerified": true
+  },
+  "breadcrumbs": [
+    {
+      "id": 0,
+      "name": "Anasayfa",
+      "h1": "Emlakjet",
+      "slug": "",
+      "type": "city",
+      "url": "/"
+    },
+    {
+      "id": 1,
+      "name": "KiralÄ±k Daire",
+      "h1": "KiralÄ±k Daire",
+      "slug": "kiralik-daire",
+      "type": "district",
+      "url": "/kiralik-daire"
+    },
+    {
+      "id": 2,
+      "name": "Hatay KiralÄ±k Daire",
+      "h1": "Hatay KiralÄ±k Daire",
+      "slug": "hatay",
+      "type": "neighborhood",
+      "url": "/kiralik-daire/hatay"
+    },
+    {
+      "id": 3,
+      "name": "DÃ¶rtyol KiralÄ±k Daire",
+      "h1": "Hatay DÃ¶rtyol KiralÄ±k Daire",
+      "slug": "hatay-dortyol",
+      "type": "neighborhood",
+      "url": "/kiralik-daire/hatay-dortyol"
+    },
+    {
+      "id": 4,
+      "name": "YeÅil Mahallesi KiralÄ±k Daire",
+      "h1": "DÃ¶rtyol YeÅil Mahallesi KiralÄ±k Daire",
+      "slug": "hatay-dortyol-yesil-mahallesi",
+      "type": "neighborhood",
+      "url": "/kiralik-daire/hatay-dortyol-yesil-mahallesi"
+    },
+    {
+      "id": 5,
+      "name": "SÃNMEZ GAYRÄ°MENKUL'DEN ÃARÅI MERKEZÄ°NDEN 3+1 KÄ°RALIK DAÄ°RE",
+      "h1": "SÃNMEZ GAYRÄ°MENKUL'DEN ÃARÅI MERKEZÄ°NDEN 3+1 KÄ°RALIK DAÄ°RE",
+      "slug": "sonmez-gayrimenkul-den-carsi-merkezinden-31-kiralik-daire-19524130",
+      "type": "neighborhood",
+      "url": "/ilan/sonmez-gayrimenkul-den-carsi-merkezinden-31-kiralik-daire-19524130"
+    }
+  ],
+  "createdAt": "2026-06-25T17:25:32Z",
+  "updatedAt": "2026-06-26T00:19:18Z",
+  "seoTitle": "SÃ¶nmez Yapi GayriÌmenkul Hatay DÃ¶rtyol YeÅil Mahallesi 3+1 Oda KiralÄ±k Daire 25,000 TL #19524130",
+  "seoDescription": "SÃ¶nmez Yapi GayriÌmenkul Hatay DÃ¶rtyol YeÅil Mahallesi 165 mÂ² 3+1 Oda 25,000 TL KiralÄ±k Daire ilanÄ± Emlakjet.com'da. #19524130",
+  "canonicalUrl": "/ilan/sonmez-gayrimenkul-den-carsi-merkezinden-31-kiralik-daire-19524130",
+  "endeksaTrendParams": {
+    "propertyCategory": 1,
+    "propertyType": 4,
+    "buildYear": "$undefined",
+    "rooms": "$undefined",
+    "floorNumber": "$undefined",
+    "heatType": "$undefined"
+  },
+  "badges": [
+    "new",
+    "featured"
+  ],
+  "extraBadges": "$undefined",
+  "properties": [
+    {
+      "name": "Ä°lan NumarasÄ±",
+      "value": "19524130"
+    },
+    {
+      "name": "Ä°lan GÃ¼ncelleme Tarihi",
+      "value": "26 Haziran 2026"
+    },
+    {
+      "name": "Kategori",
+      "value": "KiralÄ±k Daire"
+    },
+    {
+      "name": "IsÄ±tma Tipi",
+      "value": "Kombi DoÄalgaz"
+    },
+    {
+      "name": "Otopark",
+      "value": "AÃ§Ä±k Otopark"
+    },
+    {
+      "name": "KullanÄ±m Durumu",
+      "value": "BoÅ"
+    },
+    {
+      "name": "Site Ä°Ã§erisinde",
+      "value": "HayÄ±r"
+    },
+    {
+      "name": "Tapu Durumu",
+      "value": "Kat MÃ¼lkiyeti"
+    },
+    {
+      "name": "Takas",
+      "value": "Yok"
+    },
+    {
+      "name": "AsansÃ¶r",
+      "value": "Var"
+    },
+    {
+      "name": "Mutfak",
+      "value": "AÃ§Ä±k (Amerikan)"
+    },
+    {
+      "name": "EÅya Durumu",
+      "value": "BoÅ"
+    },
+    {
+      "name": "Balkon",
+      "value": "Var"
+    }
+  ],
+  "quickInfos": [
+    {
+      "name": "Oda SayÄ±sÄ±",
+      "value": "3+1"
+    },
+    {
+      "name": "Banyo SayÄ±sÄ±",
+      "value": "2"
+    },
+    {
+      "name": "BulunduÄu Kat",
+      "value": "3.Kat"
+    },
+    {
+      "name": "BinanÄ±n Kat SayÄ±sÄ±",
+      "value": "5"
+    },
+    {
+      "name": "BrÃ¼t / Net",
+      "value": "165 mÂ² / 160 mÂ²"
+    },
+    {
+      "name": "BinanÄ±n YaÅÄ±",
+      "value": "6-10"
+    }
+  ],
+  "additionalFeatures": [],
+  "attributes": {
+    "Ä°Ã§ Ãzellikler": {
+      "Banyo": [
+        "DuÅakabinli",
+        "Åofben",
+        "Ebeveyn Banyo"
+      ],
+      "Dekorasyon": [
+        "Vestiyer",
+        "Duvar KaÄÄ±dÄ±",
+        "Parke"
+      ],
+      "Mutfak": [
+        "Kiler",
+        "Ocak DoÄalgazÄ±"
+      ]
+    },
+    "DÄ±Å Ãzellikler": {
+      "Cephe": [
+        "Kuzey Cepheli",
+        "BatÄ± Cepheli"
+      ],
+      "Sosyal Ä°mkanlar": [
+        "AlÄ±ÅveriÅ Merkezi"
+      ]
+    },
+    "Konum Ãzellikleri": {
+      "UlaÅÄ±m": [
+        "Semt PazarÄ±na YakÄ±n",
+        "Okula YakÄ±n"
+      ]
+    }
+  },
+  "isEidsVerified": true,
+  "viewCount": "$undefined",
+  "priceHistory": [
+    {
+      "date": "2026-06-25T17:25:41Z",
+      "price": 25000,
+      "currency": "TRY"
+    }
+  ],
+  "priceDetail": {
+    "trendType": "$undefined",
+    "firstPrice": 25000,
+    "differenceRate": 0,
+    "discountRate": 0
+  },
+  "endeksaValuation": {
+    "price": "$undefined",
+    "minPrice": "$undefined",
+    "maxPrice": "$undefined",
+    "rentPrice": "$undefined",
+    "rentMin": "$undefined",
+    "rentMax": "$undefined",
+    "yearsOfRoi": "$undefined",
+    "updatedAt": "$undefined",
+    "investmentParameters": "$undefined"
+  },
+  "endeksaValuationView": "$undefined",
+  "displaySettings": {
+    "show_on_map": false,
+    "show_valuation": false,
+    "show_investment_score": false
+  },
+  "tradeType": {
+    "key": "rent",
+    "typeId": 6
+  },
+  "earthquakeRiskScore": 0.296,
+  "earthquakeRiskColor": null,
+  "neighborhoodGeometry": {
+    "type": "multipolygon",
+    "coordinates": [
+      [
+        [
+          [
+            36.36844,
+            36.90415
+          ],
+          [
+            36.34351,
+            36.90999
+          ],
+          [
+            36.32514,
+            36.91456
+          ],
+          [
+            36.323425932,
+            36.914751225
+          ],
+          [
+            36.321486142,
+            36.913439575
+          ],
+          [
+            36.298757947,
+            36.909917221
+          ],
+          [
+            36.270976798,
+            36.914388113
+          ],
+          [
+            36.270792602,
+            36.914270121
+          ],
+          [
+            36.27041,
+            36.90807
+          ],
+          [
+            36.26729,
+            36.90326
+          ],
+          [
+            36.26429,
+            36.89727
+          ],
+          [
+            36.2587,
+            36.88881
+          ],
+          [
+            36.25024,
+            36.88203
+          ],
+          [
+            36.24773,
+            36.88184
+          ],
+          [
+            36.24462,
+            36.88041
+          ],
+          [
+            36.24357,
+            36.87784
+          ],
+          [
+            36.24202,
+            36.87509
+          ],
+          [
+            36.24715,
+            36.87299
+          ],
+          [
+            36.25048,
+            36.86629
+          ],
+          [
+            36.25063,
+            36.86408
+          ],
+          [
+            36.25036,
+            36.86149
+          ],
+          [
+            36.24869,
+            36.8583
+          ],
+          [
+            36.24458,
+            36.85653
+          ],
+          [
+            36.24467,
+            36.8561
+          ],
+          [
+            36.24456,
+            36.85585
+          ],
+          [
+            36.24355,
+            36.85561
+          ],
+          [
+            36.24155,
+            36.85494
+          ],
+          [
+            36.23973,
+            36.85459
+          ],
+          [
+            36.23902,
+            36.85437
+          ],
+          [
+            36.23635,
+            36.8532
+          ],
+          [
+            36.23527,
+            36.85248
+          ],
+          [
+            36.23501,
+            36.85177
+          ],
+          [
+            36.23438,
+            36.85121
+          ],
+          [
+            36.23279,
+            36.85033
+          ],
+          [
+            36.23191,
+            36.84963
+          ],
+          [
+            36.23179,
+            36.84922
+          ],
+          [
+            36.23185,
+            36.84896
+          ],
+          [
+            36.23139,
+            36.84836
+          ],
+          [
+            36.23057,
+            36.84667
+          ],
+          [
+            36.23059,
+            36.8461
+          ],
+          [
+            36.23018,
+            36.84499
+          ],
+          [
+            36.23004,
+            36.84245
+          ],
+          [
+            36.23015,
+            36.84057
+          ],
+          [
+            36.2297,
+            36.83863
+          ],
+          [
+            36.22955,
+            36.8386
+          ],
+          [
+            36.22917,
+            36.83702
+          ],
+          [
+            36.230883983,
+            36.836772315
+          ],
+          [
+            36.23489,
+            36.83662
+          ],
+          [
+            36.23994,
+            36.83716
+          ],
+          [
+            36.2408,
+            36.83714
+          ],
+          [
+            36.24301,
+            36.837
+          ],
+          [
+            36.24695,
+            36.83626
+          ],
+          [
+            36.24888,
+            36.83634
+          ],
+          [
+            36.24932,
+            36.83643
+          ],
+          [
+            36.24948,
+            36.8368
+          ],
+          [
+            36.25063,
+            36.83666
+          ],
+          [
+            36.25105,
+            36.8372
+          ],
+          [
+            36.25206,
+            36.83739
+          ],
+          [
+            36.25263,
+            36.83759
+          ],
+          [
+            36.25324,
+            36.83787
+          ],
+          [
+            36.25428,
+            36.83856
+          ],
+          [
+            36.25463,
+            36.83856
+          ],
+          [
+            36.2563,
+            36.83811
+          ],
+          [
+            36.2564,
+            36.8381
+          ],
+          [
+            36.25714,
+            36.83709
+          ],
+          [
+            36.25869,
+            36.83551
+          ],
+          [
+            36.25878,
+            36.83474
+          ],
+          [
+            36.25925,
+            36.83394
+          ],
+          [
+            36.25995,
+            36.83301
+          ],
+          [
+            36.26023,
+            36.83241
+          ],
+          [
+            36.26003,
+            36.832
+          ],
+          [
+            36.26038,
+            36.8314
+          ],
+          [
+            36.26036,
+            36.8312
+          ],
+          [
+            36.26098,
+            36.83183
+          ],
+          [
+            36.26091,
+            36.83205
+          ],
+          [
+            36.26129,
+            36.83165
+          ],
+          [
+            36.26132,
+            36.83111
+          ],
+          [
+            36.26143,
+            36.83051
+          ],
+          [
+            36.26155,
+            36.83037
+          ],
+          [
+            36.26164,
+            36.82974
+          ],
+          [
+            36.26251,
+            36.82939
+          ],
+          [
+            36.26593,
+            36.82913
+          ],
+          [
+            36.26651,
+            36.82885
+          ],
+          [
+            36.2666,
+            36.82857
+          ],
+          [
+            36.26636,
+            36.82815
+          ],
+          [
+            36.26648,
+            36.82773
+          ],
+          [
+            36.26677,
+            36.82719
+          ],
+          [
+            36.26742,
+            36.82677
+          ],
+          [
+            36.268,
+            36.82658
+          ],
+          [
+            36.26905,
+            36.826
+          ],
+          [
+            36.27083,
+            36.82556
+          ],
+          [
+            36.27261,
+            36.82539
+          ],
+          [
+            36.27346,
+            36.82483
+          ],
+          [
+            36.27468,
+            36.82479
+          ],
+          [
+            36.27538,
+            36.82439
+          ],
+          [
+            36.27541,
+            36.82415
+          ],
+          [
+            36.27559,
+            36.82392
+          ],
+          [
+            36.27631,
+            36.82324
+          ],
+          [
+            36.27777,
+            36.8225
+          ],
+          [
+            36.27777,
+            36.82243
+          ],
+          [
+            36.27916,
+            36.82194
+          ],
+          [
+            36.2807,
+            36.82228
+          ],
+          [
+            36.28112,
+            36.82198
+          ],
+          [
+            36.28454,
+            36.82504
+          ],
+          [
+            36.28891,
+            36.8252
+          ],
+          [
+            36.29459,
+            36.82607
+          ],
+          [
+            36.29476,
+            36.82601
+          ],
+          [
+            36.29554,
+            36.82526
+          ],
+          [
+            36.29547,
+            36.82512
+          ],
+          [
+            36.29497,
+            36.82497
+          ],
+          [
+            36.29496,
+            36.82485
+          ],
+          [
+            36.29683,
+            36.82346
+          ],
+          [
+            36.29686,
+            36.82315
+          ],
+          [
+            36.29697,
+            36.82309
+          ],
+          [
+            36.29776,
+            36.82314
+          ],
+          [
+            36.29827,
+            36.82289
+          ],
+          [
+            36.29882,
+            36.82279
+          ],
+          [
+            36.2991,
+            36.82264
+          ],
+          [
+            36.29893,
+            36.82213
+          ],
+          [
+            36.29893,
+            36.82184
+          ],
+          [
+            36.29898,
+            36.82154
+          ],
+          [
+            36.29921,
+            36.82119
+          ],
+          [
+            36.2999,
+            36.82101
+          ],
+          [
+            36.30044,
+            36.82128
+          ],
+          [
+            36.30063,
+            36.82119
+          ],
+          [
+            36.30124,
+            36.82043
+          ],
+          [
+            36.30272,
+            36.82086
+          ],
+          [
+            36.30386,
+            36.82026
+          ],
+          [
+            36.30467,
+            36.81998
+          ],
+          [
+            36.30506,
+            36.81995
+          ],
+          [
+            36.30513,
+            36.81983
+          ],
+          [
+            36.3051,
+            36.81929
+          ],
+          [
+            36.30528,
+            36.81889
+          ],
+          [
+            36.30557,
+            36.81872
+          ],
+          [
+            36.30622,
+            36.81759
+          ],
+          [
+            36.30692,
+            36.81743
+          ],
+          [
+            36.30713,
+            36.81746
+          ],
+          [
+            36.30777,
+            36.81814
+          ],
+          [
+            36.30877,
+            36.81856
+          ],
+          [
+            36.30888,
+            36.81889
+          ],
+          [
+            36.30869,
+            36.81941
+          ],
+          [
+            36.30902,
+            36.81968
+          ],
+          [
+            36.30926,
+            36.82007
+          ],
+          [
+            36.30951,
+            36.82092
+          ],
+          [
+            36.31113,
+            36.82158
+          ],
+          [
+            36.31177,
+            36.82145
+          ],
+          [
+            36.31243,
+            36.82101
+          ],
+          [
+            36.31292,
+            36.82099
+          ],
+          [
+            36.31343,
+            36.8218
+          ],
+          [
+            36.31424,
+            36.82192
+          ],
+          [
+            36.31431,
+            36.82246
+          ],
+          [
+            36.3146,
+            36.82301
+          ],
+          [
+            36.31485,
+            36.82329
+          ],
+          [
+            36.31476,
+            36.82387
+          ],
+          [
+            36.31496,
+            36.82405
+          ],
+          [
+            36.31531,
+            36.82402
+          ],
+          [
+            36.31569,
+            36.82373
+          ],
+          [
+            36.3163,
+            36.82352
+          ],
+          [
+            36.31653,
+            36.82335
+          ],
+          [
+            36.31716,
+            36.82331
+          ],
+          [
+            36.31775,
+            36.82295
+          ],
+          [
+            36.31812,
+            36.82298
+          ],
+          [
+            36.31841,
+            36.82286
+          ],
+          [
+            36.31878,
+            36.82337
+          ],
+          [
+            36.31869,
+            36.82374
+          ],
+          [
+            36.31916,
+            36.82405
+          ],
+          [
+            36.31944,
+            36.82465
+          ],
+          [
+            36.31963,
+            36.82474
+          ],
+          [
+            36.32081,
+            36.82466
+          ],
+          [
+            36.32169,
+            36.82538
+          ],
+          [
+            36.32176,
+            36.82576
+          ],
+          [
+            36.3216,
+            36.82618
+          ],
+          [
+            36.32211,
+            36.82699
+          ],
+          [
+            36.32247,
+            36.82688
+          ],
+          [
+            36.32308,
+            36.82631
+          ],
+          [
+            36.32365,
+            36.82608
+          ],
+          [
+            36.32364,
+            36.82578
+          ],
+          [
+            36.32341,
+            36.82529
+          ],
+          [
+            36.3234,
+            36.82474
+          ],
+          [
+            36.32394,
+            36.82417
+          ],
+          [
+            36.32416,
+            36.82371
+          ],
+          [
+            36.32438,
+            36.82348
+          ],
+          [
+            36.32486,
+            36.82311
+          ],
+          [
+            36.3251,
+            36.82303
+          ],
+          [
+            36.32563,
+            36.82352
+          ],
+          [
+            36.32634,
+            36.82351
+          ],
+          [
+            36.32683,
+            36.82412
+          ],
+          [
+            36.32753,
+            36.82452
+          ],
+          [
+            36.32908,
+            36.82463
+          ],
+          [
+            36.33049,
+            36.82434
+          ],
+          [
+            36.33089,
+            36.82454
+          ],
+          [
+            36.33176,
+            36.82463
+          ],
+          [
+            36.33214,
+            36.82481
+          ],
+          [
+            36.33277,
+            36.82461
+          ],
+          [
+            36.3329,
+            36.82463
+          ],
+          [
+            36.33299,
+            36.82487
+          ],
+          [
+            36.33353,
+            36.82477
+          ],
+          [
+            36.33409,
+            36.82719
+          ],
+          [
+            36.33482,
+            36.82811
+          ],
+          [
+            36.33559,
+            36.82862
+          ],
+          [
+            36.33605,
+            36.8291
+          ],
+          [
+            36.33688,
+            36.8297
+          ],
+          [
+            36.33896,
+            36.83037
+          ],
+          [
+            36.33987,
+            36.83104
+          ],
+          [
+            36.34057,
+            36.83098
+          ],
+          [
+            36.3411,
+            36.83066
+          ],
+          [
+            36.34154,
+            36.83021
+          ],
+          [
+            36.34178,
+            36.83021
+          ],
+          [
+            36.34207,
+            36.83044
+          ],
+          [
+            36.34234,
+            36.83087
+          ],
+          [
+            36.34296,
+            36.83109
+          ],
+          [
+            36.34512,
+            36.83122
+          ],
+          [
+            36.34651,
+            36.83118
+          ],
+          [
+            36.34726,
+            36.83141
+          ],
+          [
+            36.34788,
+            36.83141
+          ],
+          [
+            36.3486,
+            36.8311
+          ],
+          [
+            36.34879,
+            36.8311
+          ],
+          [
+            36.34892,
+            36.8312
+          ],
+          [
+            36.34844,
+            36.83193
+          ],
+          [
+            36.34806,
+            36.8323
+          ],
+          [
+            36.34775,
+            36.8332
+          ],
+          [
+            36.34753,
+            36.83454
+          ],
+          [
+            36.34734,
+            36.83473
+          ],
+          [
+            36.347,
+            36.83477
+          ],
+          [
+            36.34662,
+            36.83494
+          ],
+          [
+            36.34679,
+            36.83564
+          ],
+          [
+            36.34707,
+            36.8362
+          ],
+          [
+            36.34689,
+            36.83659
+          ],
+          [
+            36.34675,
+            36.83678
+          ],
+          [
+            36.34617,
+            36.83679
+          ],
+          [
+            36.34537,
+            36.83796
+          ],
+          [
+            36.34548,
+            36.83821
+          ],
+          [
+            36.34636,
+            36.83906
+          ],
+          [
+            36.34683,
+            36.83923
+          ],
+          [
+            36.34774,
+            36.83922
+          ],
+          [
+            36.34839,
+            36.83954
+          ],
+          [
+            36.3486,
+            36.83983
+          ],
+          [
+            36.34866,
+            36.84015
+          ],
+          [
+            36.34927,
+            36.84058
+          ],
+          [
+            36.34936,
+            36.84101
+          ],
+          [
+            36.34925,
+            36.84133
+          ],
+          [
+            36.34928,
+            36.84165
+          ],
+          [
+            36.34962,
+            36.84207
+          ],
+          [
+            36.35069,
+            36.84217
+          ],
+          [
+            36.35221,
+            36.84177
+          ],
+          [
+            36.35248,
+            36.84183
+          ],
+          [
+            36.35291,
+            36.8425
+          ],
+          [
+            36.35316,
+            36.84269
+          ],
+          [
+            36.35369,
+            36.84278
+          ],
+          [
+            36.35425,
+            36.84271
+          ],
+          [
+            36.35465,
+            36.84246
+          ],
+          [
+            36.35489,
+            36.84248
+          ],
+          [
+            36.35532,
+            36.84277
+          ],
+          [
+            36.35562,
+            36.84333
+          ],
+          [
+            36.35644,
+            36.84401
+          ],
+          [
+            36.35676,
+            36.84406
+          ],
+          [
+            36.35722,
+            36.84383
+          ],
+          [
+            36.35774,
+            36.85289
+          ],
+          [
+            36.36166,
+            36.86418
+          ],
+          [
+            36.36258,
+            36.88113
+          ],
+          [
+            36.3661,
+            36.89856
+          ],
+          [
+            36.36844,
+            36.90415
+          ]
+        ]
+      ]
+    ]
+  },
+  "bffCadastre": {
+    "blockNo": "1824",
+    "area": "461,13",
+    "provinceName": "Hatay",
+    "provinceId": "53",
+    "districtName": "DÃ¶rtyol",
+    "districtId": "471",
+    "neighbourhoodId": "141691",
+    "neighbourhoodName": "YeÅil",
+    "locality": "",
+    "qualification": "Arsa ",
+    "sheet": "O36-A-20-B-4-B",
+    "parcelNo": "5",
+    "status": "1",
+    "parcelTransferReason": "",
+    "parcelTransferList": "",
+    "groundStatus": "Kat Ä°rtifak",
+    "geometry": {
+      "coordinates": [
+        [
+          [
+            36.23141,
+            36.83687
+          ],
+          [
+            36.23141,
+            36.83688
+          ],
+          [
+            36.2314,
+            36.83703
+          ],
+          [
+            36.23134,
+            36.83703
+          ],
+          [
+            36.23126,
+            36.83703
+          ],
+          [
+            36.23114,
+            36.83703
+          ],
+          [
+            36.23115,
+            36.83702
+          ],
+          [
+            36.23116,
+            36.83696
+          ],
+          [
+            36.23118,
+            36.83684
+          ],
+          [
+            36.23119,
+            36.83684
+          ],
+          [
+            36.23138,
+            36.83684
+          ],
+          [
+            36.23141,
+            36.83687
+          ]
+        ]
+      ],
+      "type": "Polygon"
+    }
+  },
+  "bffZoning": null,
+  "bffFellowCountryMan": [
+    {
+      "CitizenCity": "HATAY",
+      "CountOf": 7771
+    },
+    {
+      "CitizenCity": "DÄ°YARBAKIR",
+      "CountOf": 1239
+    },
+    {
+      "CitizenCity": "ADANA",
+      "CountOf": 625
+    },
+    {
+      "CitizenCity": "ÅANLIURFA",
+      "CountOf": 522
+    },
+    {
+      "CitizenCity": "KAHRAMANMARAÅ",
+      "CountOf": 470
+    },
+    {
+      "CitizenCity": "OSMANÄ°YE",
+      "CountOf": 401
+    },
+    {
+      "CitizenCity": "GAZÄ°ANTEP",
+      "CountOf": 328
+    },
+    {
+      "CitizenCity": "KARABÃK",
+      "CountOf": 160
+    },
+    {
+      "CitizenCity": "BÄ°NGÃL",
+      "CountOf": 156
+    },
+    {
+      "CitizenCity": "MARDÄ°N",
+      "CountOf": 140
+    }
+  ]
+}
