@@ -1,0 +1,261 @@
+// Revy emlak/FSBO veri modeli
+// Bkz. BACKEND_PLAN.md bölüm 3
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum AccountStatus {
+  aktif
+  pasif
+  kisitli
+  banli
+}
+
+enum PlanId {
+  free
+  pro
+  enterprise
+}
+
+enum SubscriptionStatus {
+  active
+  cancelled
+}
+
+enum PropertyCategory {
+  satilik
+  kiralik
+  villa
+  daire
+}
+
+enum AppointmentStatus {
+  bekliyor
+  onaylandi
+  iptal
+}
+
+model User {
+  id               String         @id @default(cuid())
+  username         String         @unique
+  email            String         @unique
+  passwordHash     String?
+  name             String
+  firstName        String?
+  lastName         String?
+  avatar           String?
+  phone            String?
+  role             Role           @default(user)
+  status           AccountStatus  @default(aktif)
+  banReason        String?
+  city             String?
+  lastIp           String?
+  device           String?
+  profileCompleted Boolean        @default(false)
+  profile          Json?
+  googleId         String?        @unique
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  lastSeenAt       DateTime?
+
+  subscription     Subscription?
+  invoices         Invoice[]
+  properties       Property[]
+  lists            List[]
+  customers        Customer[]
+  appointments     Appointment[]
+  dailyEntries     DailyEntry[]
+  notifications    Notification[]
+  refreshTokens    RefreshToken[]
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Subscription {
+  id        String             @id @default(cuid())
+  userId    String             @unique
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planId    PlanId             @default(free)
+  status    SubscriptionStatus @default(active)
+  since     DateTime           @default(now())
+  renewsAt  DateTime?
+  updatedAt DateTime           @updatedAt
+}
+
+model Invoice {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      DateTime @default(now())
+  plan      String
+  amount    Int
+  currency  String   @default("TRY")
+  status    String   @default("paid")
+  pdfUrl    String?
+
+  @@index([userId])
+}
+
+model Property {
+  id          String           @id @default(cuid())
+  ownerId     String
+  owner       User             @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  location    String?
+  city        String?
+  district    String?
+  price       Int?
+  currency    String           @default("TRY")
+  size        Int?
+  rooms       String?
+  category    PropertyCategory @default(satilik)
+  lat         Float?
+  lng         Float?
+  images      String[]
+  status      String           @default("active")
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  listItems         ListItem[]
+  customerListings  CustomerListing[]
+  appointments      Appointment[]
+
+  @@index([ownerId])
+  @@index([category])
+  @@index([city])
+}
+
+model List {
+  id        String     @id @default(cuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  color     String?
+  icon      String?
+  createdAt DateTime   @default(now())
+  items     ListItem[]
+
+  @@index([userId])
+}
+
+model ListItem {
+  id         String   @id @default(cuid())
+  listId     String
+  list       List     @relation(fields: [listId], references: [id], onDelete: Cascade)
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  addedAt    DateTime @default(now())
+
+  @@unique([listId, propertyId])
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name      String
+  email     String?
+  phone     String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  listings     CustomerListing[]
+  appointments Appointment[]
+
+  @@index([ownerId])
+}
+
+model CustomerListing {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  relation   String?
+  createdAt  DateTime @default(now())
+
+  @@unique([customerId, propertyId])
+}
+
+model Appointment {
+  id           String            @id @default(cuid())
+  ownerId      String
+  owner        User              @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  title        String
+  date         String
+  time         String
+  duration     Int               @default(60)
+  attendeeId   String?
+  attendee     Customer?         @relation(fields: [attendeeId], references: [id], onDelete: SetNull)
+  attendeeName String?
+  listingId    String?
+  listing      Property?         @relation(fields: [listingId], references: [id], onDelete: SetNull)
+  listingTitle String?
+  location     String?
+  description  String?
+  status       AppointmentStatus @default(bekliyor)
+  createdAt    DateTime          @default(now())
+
+  @@index([ownerId])
+}
+
+model DailyEntry {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      String
+  content   String
+  type      String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String   @default("system")
+  title       String
+  description String?
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+}
+
+model EvdsSeries {
+  id      String  @id @default(cuid())
+  code    String
+  name    String?
+  dataset String?
+  period  String?
+  region  String?
+  value   Float?
+
+  @@index([dataset])
+  @@index([code])
+}
