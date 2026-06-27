@@ -189,7 +189,7 @@ export default function Login() {
 
               {mode === 'login' && (
                 <p className="text-[10px] text-gray-400 font-medium text-center leading-relaxed">
-                  Test hesabı: <span className="font-bold" style={{ color: '#1e1b2e' }}>test</span> / <span className="font-bold" style={{ color: '#1e1b2e' }}>test</span>
+                  Test hesabı: <span className="font-bold" style={{ color: '#1e1b2e' }}>test</span> / <span className="font-bold" style={{ color: '#1e1b2e' }}>test1234</span>
                 </p>
               )}
 

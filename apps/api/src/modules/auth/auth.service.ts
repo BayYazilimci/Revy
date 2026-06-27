@@ -40,10 +40,14 @@ export class AuthService {
       secret: process.env.JWT_ACCESS_SECRET,
       expiresIn: process.env.JWT_ACCESS_TTL || '900s',
     });
-    const refreshToken = await this.jwt.signAsync(payload, {
-      secret: process.env.JWT_REFRESH_SECRET,
-      expiresIn: process.env.JWT_REFRESH_TTL || '7d',
-    });
+    // jti: her refresh token'ı benzersiz kıl → token rotasyonu/yeniden-kullanım tespiti güvenilir olur
+    const refreshToken = await this.jwt.signAsync(
+      { ...payload, jti: crypto.randomUUID() },
+      {
+        secret: process.env.JWT_REFRESH_SECRET,
+        expiresIn: process.env.JWT_REFRESH_TTL || '7d',
+      },
+    );
 
     const tokenHash = crypto.createHash('sha256').update(refreshToken).digest('hex');
     await this.prisma.refreshToken.create({
