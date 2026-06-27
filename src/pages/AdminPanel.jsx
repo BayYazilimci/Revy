@@ -377,6 +377,10 @@ function UserDetailDrawer({ account, isSelf, onClose, onStatus }) {
                   className="col-span-2 py-3 rounded-xl text-xs font-extrabold text-white bg-emerald-500 hover:bg-emerald-600 transition-colors btn flex items-center justify-center gap-1.5">
                   <Unlock size={14} /> Yasağı Kaldır (Hesabı Aç)
                 </button>
+              ) : isSelf ? (
+                <p className="col-span-2 text-[11px] font-bold text-gray-400 text-center py-2">
+                  Kendi hesabınızı kısıtlayamaz veya banlayamazsınız.
+                </p>
               ) : (
                 <>
                   {account.status === 'kisitli' ? (
@@ -831,7 +835,7 @@ export default function AdminPanel() {
                             <button onClick={() => setStatus(u.id, 'aktif', { banReason: undefined })} title="Yasağı kaldır" className="w-7 h-7 rounded-lg bg-cream border border-cardBorder flex items-center justify-center text-gray-400 hover:text-emerald-500 hover:border-emerald-200 transition-all btn">
                               <Unlock size={13} />
                             </button>
-                          ) : (
+                          ) : !isSelf && (
                             <button onClick={() => setStatus(u.id, 'banli', { banReason: 'Kullanım koşullarının ihlali' })} title="Banla" className="w-7 h-7 rounded-lg bg-cream border border-cardBorder flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-200 transition-all btn">
                               <Ban size={13} />
                             </button>

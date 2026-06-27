@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Injectable, Module, Param, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Injectable, Module, Param, Put } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { IsIn, IsOptional, IsString } from 'class-validator';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Roles } from '../../common/decorators/roles.decorator';
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
 
 class SetStatusDto {
   @IsIn(['aktif', 'pasif', 'kisitli', 'banli']) status: 'aktif' | 'pasif' | 'kisitli' | 'banli';
@@ -43,7 +44,11 @@ class AdminService {
     });
   }
 
-  setStatus(id: string, dto: SetStatusDto) {
+  async setStatus(actorId: string, id: string, dto: SetStatusDto) {
+    // Admin kendini banlayıp/kısıtlayıp kilitlenemesin
+    if (actorId === id && dto.status !== 'aktif') {
+      throw new BadRequestException('Kendi hesabınızın durumunu kısıtlayamaz/banlayamazsınız.');
+    }
     return this.prisma.user.update({
       where: { id },
       data: { status: dto.status, banReason: dto.status === 'banli' ? dto.banReason : null },
@@ -152,7 +157,7 @@ class AdminController {
 
   @Get('accounts') accounts() { return this.service.accounts(); }
   @Get('overview') overview() { return this.service.overview(); }
-  @Put('accounts/:id/status') setStatus(@Param('id') id: string, @Body() dto: SetStatusDto) { return this.service.setStatus(id, dto); }
+  @Put('accounts/:id/status') setStatus(@CurrentUser('id') actorId: string, @Param('id') id: string, @Body() dto: SetStatusDto) { return this.service.setStatus(actorId, id, dto); }
 }
 
 @Module({ controllers: [AdminController], providers: [AdminService] })
