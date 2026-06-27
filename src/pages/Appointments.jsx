@@ -3,7 +3,7 @@ import { useAppointments } from '../hooks/useAppointments'
 import { useCustomers } from '../hooks/useCustomers'
 import { useApp } from '../context/AppContext'
 import { TabContext } from '../App'
-import { properties } from '../data/properties'
+import { usePropertyData } from '../context/PropertiesContext'
 import { MY_LISTINGS_ID } from '../data/lists'
 import { 
   Calendar as CalendarIcon, Clock, MapPin, FileText, Plus, X, 
@@ -45,6 +45,7 @@ const formatDateStr = (dateObj) => {
 }
 
 export default function Appointments() {
+  const { properties } = usePropertyData()
   const { addToast, lists } = useApp()
   const { appointments, loading, create, update, remove, checkConflict } = useAppointments()
   const { customers, loading: loadingCust } = useCustomers()

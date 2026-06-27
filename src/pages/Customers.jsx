@@ -4,7 +4,7 @@ import { useCustomers } from '../hooks/useCustomers'
 import { useCustomerListings } from '../hooks/useCustomerListings'
 import { useApp } from '../context/AppContext'
 import { TabContext } from '../App'
-import { properties } from '../data/properties'
+import { usePropertyData } from '../context/PropertiesContext'
 import { MY_LISTINGS_ID } from '../data/lists'
 import {
   Plus, Search, Pencil, Trash2, X, AlertTriangle,
@@ -25,6 +25,7 @@ const initialForm = {
 
 export default function Customers() {
   const navigate = useNavigate()
+  const { properties } = usePropertyData()
   const { setActiveTab, setTabParams } = useContext(TabContext)
   const { customers, loading, create, update, remove } = useCustomers()
   const { getListingsForCustomer, associate, disassociate } = useCustomerListings()

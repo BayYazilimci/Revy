@@ -33,13 +33,6 @@ enum SubscriptionStatus {
   cancelled
 }
 
-enum PropertyCategory {
-  satilik
-  kiralik
-  villa
-  daire
-}
-
 enum AppointmentStatus {
   bekliyor
   onaylandi
@@ -118,32 +111,40 @@ model Invoice {
 }
 
 model Property {
-  id          String           @id @default(cuid())
+  id          String   @id @default(cuid())
   ownerId     String
-  owner       User             @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   title       String
   description String?
   location    String?
   city        String?
-  district    String?
-  price       Int?
-  currency    String           @default("TRY")
-  size        Int?
-  rooms       String?
-  category    PropertyCategory @default(satilik)
+  // Görsel/biçimli alanlar (frontend ilan şekliyle birebir)
+  priceText   String?  // '₺14.600.000'
+  price       Int?     // sıralama/filtre için sayısal
+  sizeText    String?  // '130 m²'
+  size        Int?     // sayısal m²
+  rooms       String?  // '3+1'
+  floor       String?
+  age         String?
+  img         String?
+  badge       String?
+  status      String   @default("Aktif")
+  timeText    String?  // '22 Haziran 2026'
   lat         Float?
   lng         Float?
-  images      String[]
-  status      String           @default("active")
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  type        String?  // 'Satılık' | 'Kiralık'
+  subtype     String?  // 'Daire' | 'Villa' | ...
+  listOrder   Int?     // propertyList sırası (null → listede değil)
+  isDaily     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   listItems         ListItem[]
   customerListings  CustomerListing[]
   appointments      Appointment[]
 
   @@index([ownerId])
-  @@index([category])
+  @@index([type])
   @@index([city])
 }
 

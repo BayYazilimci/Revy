@@ -3,6 +3,7 @@ import { BrowserRouter, useLocation, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { AppProvider, useApp } from './context/AppContext'
 import { AiAssistantProvider } from './context/AiAssistantContext'
+import { PropertiesProvider } from './context/PropertiesContext'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -210,11 +211,13 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <AppProvider>
-          <AiAssistantProvider>
-            <ErrorBoundary>
-              <AppLayout />
-            </ErrorBoundary>
-          </AiAssistantProvider>
+          <PropertiesProvider>
+            <AiAssistantProvider>
+              <ErrorBoundary>
+                <AppLayout />
+              </ErrorBoundary>
+            </AiAssistantProvider>
+          </PropertiesProvider>
         </AppProvider>
       </AuthProvider>
     </BrowserRouter>

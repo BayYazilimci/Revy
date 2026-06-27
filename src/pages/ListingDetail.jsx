@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import mapboxgl from 'mapbox-gl'
-import { properties } from '../data/properties'
+import { usePropertyData } from '../context/PropertiesContext'
 import { useApp } from '../context/AppContext'
 import { useCustomers } from '../hooks/useCustomers'
 import { useCustomerListings } from '../hooks/useCustomerListings'
@@ -28,6 +28,7 @@ const stars = [1, 2, 3, 4, 5]
 
 export default function ListingDetail() {
   const { id } = useParams()
+  const { properties, loading: propsLoading } = usePropertyData()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const fromIlanlarim = searchParams.get('from') === 'portfoyum' || searchParams.get('from') === 'ilanlarim'
@@ -301,6 +302,14 @@ export default function ListingDetail() {
       navigator.clipboard?.writeText(url)
       addToast('Link kopyalandı')
     }
+  }
+
+  if (!prop && propsLoading) {
+    return (
+      <div className="flex-1 flex items-center justify-center py-20">
+        <div className="w-10 h-10 border-4 border-gray-200 border-t-accent rounded-full animate-spin" />
+      </div>
+    )
   }
 
   if (!prop) {

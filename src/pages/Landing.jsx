@@ -25,12 +25,13 @@ import {
   Send,
   AlertTriangle
 } from 'lucide-react'
-import { properties } from '../data/properties'
+import { usePropertyData } from '../context/PropertiesContext'
 import { PLANS } from '../config'
 import { useAuth } from '../context/AuthContext'
 
 export default function Landing() {
   const navigate = useNavigate()
+  const { properties } = usePropertyData()
   const { isAuthenticated } = useAuth()
 
   // State Declarations

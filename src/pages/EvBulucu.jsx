@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Bot, Send, Home, MapPin, Star, Search, Sparkles } from 'lucide-react'
-import { properties } from '../data/properties'
+import { usePropertyData } from '../context/PropertiesContext'
 import { parseUserMessage, findBestMatches, generateResponse } from '../utils/evBulucuUtils'
 
 function formatPrice(price) {
@@ -52,6 +52,7 @@ function StarRating({ pct }) {
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&auto=format&fit=crop&q=60'
 
 export default function EvBulucu() {
+  const { properties } = usePropertyData()
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)

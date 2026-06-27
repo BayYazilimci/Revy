@@ -2,8 +2,7 @@ import { useEffect, useRef, useState, useMemo, useCallback } from 'react'
 import { useDragScroll } from '../hooks'
 import { useNavigate } from 'react-router-dom'
 import mapboxgl from 'mapbox-gl'
-import { dailyProperties } from '../data/daily'
-import { allProperties as allPropertiesData } from '../data/properties'
+import { usePropertyData } from '../context/PropertiesContext'
 import { CATEGORIES } from '../config'
 import { getAllPriceRatings } from '../utils/priceRating'
 import { MapPin, Clock, Sun, ChevronDown, Eye, Search, X, RotateCcw, SlidersHorizontal, TrendingDown, TrendingUp, Minus } from 'lucide-react'
@@ -29,13 +28,14 @@ export default function Daily() {
   const navigate = useNavigate()
   const mapContainer = useRef(null)
   const map = useRef(null)
+  const { dailyProperties, allProperties: allPropertiesData } = usePropertyData()
   const [activeZone] = useState(ZONES[0])
   const [selectedId, setSelectedId] = useState(null)
-  const [properties] = useState(dailyProperties)
+  const properties = dailyProperties
   const markersRef = useRef([])
 
   // Emsal fiyat karşılaştırma rating'lerini hesapla
-  const priceRatings = useMemo(() => getAllPriceRatings(allPropertiesData), [])
+  const priceRatings = useMemo(() => getAllPriceRatings(allPropertiesData), [allPropertiesData])
   const [mapLoaded, setMapLoaded] = useState(false)
 
   const [showFilters, setShowFilters] = useState(false)

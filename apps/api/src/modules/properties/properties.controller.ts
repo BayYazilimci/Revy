@@ -12,7 +12,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PropertiesService } from './properties.service';
 import { Public } from '../../common/decorators/public.decorator';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
-import { CreatePropertyDto, QueryPropertyDto, UpdatePropertyDto } from './dto/property.dto';
+import { CreatePropertyDto, UpdatePropertyDto } from './dto/property.dto';
 
 @ApiTags('properties')
 @Controller('properties')
@@ -21,8 +21,14 @@ export class PropertiesController {
 
   @Public()
   @Get()
-  findAll(@Query() q: QueryPropertyDto) {
-    return this.service.findAll(q);
+  findAll() {
+    return this.service.findAll();
+  }
+
+  @Public()
+  @Get('daily')
+  daily() {
+    return this.service.daily();
   }
 
   @Public()

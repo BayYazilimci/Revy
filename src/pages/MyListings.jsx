@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { properties } from '../data/properties'
+import { usePropertyData } from '../context/PropertiesContext'
 import { useApp } from '../context/AppContext'
 import { useCustomers } from '../hooks/useCustomers'
 import { useCustomerListings } from '../hooks/useCustomerListings'
@@ -16,6 +16,7 @@ import {
 
 export default function MyListings() {
   const navigate = useNavigate()
+  const { properties } = usePropertyData()
   const { lists, toggleMyListing, updateItemNote, addToast } = useApp()
   const { customers } = useCustomers()
   const { getCustomersForListing, associate, disassociate } = useCustomerListings()

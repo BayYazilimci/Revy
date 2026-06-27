@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { properties } from '../data/properties'
+import { usePropertyData } from '../context/PropertiesContext'
 import { useApp } from '../context/AppContext'
 import {
   Plus, ArrowLeft, Clock, ArrowUpDown, Heart,
@@ -11,6 +11,7 @@ import {
 
 export default function Favorites() {
   const navigate = useNavigate()
+  const { properties } = usePropertyData()
   const { addToast, lists, createList, editList, deleteList, removeFromList } = useApp()
 
   const [view, setView] = useState('lists')

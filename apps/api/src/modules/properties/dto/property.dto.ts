@@ -1,48 +1,37 @@
-import {
-  IsArray,
-  IsEnum,
-  IsInt,
-  IsOptional,
-  IsString,
-  IsNumber,
-  Min,
-} from 'class-validator';
-import { Type } from 'class-transformer';
-
-export enum PropertyCategory {
-  satilik = 'satilik',
-  kiralik = 'kiralik',
-  villa = 'villa',
-  daire = 'daire',
-}
+import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreatePropertyDto {
   @IsString() title: string;
-  @IsOptional() @IsString() description?: string;
+  @IsOptional() @IsString() desc?: string;
   @IsOptional() @IsString() location?: string;
   @IsOptional() @IsString() city?: string;
-  @IsOptional() @IsString() district?: string;
-  @IsOptional() @IsInt() @Min(0) price?: number;
-  @IsOptional() @IsString() currency?: string;
-  @IsOptional() @IsInt() @Min(0) size?: number;
+  @IsOptional() @IsString() price?: string;   // '₺14.600.000'
+  @IsOptional() @IsString() size?: string;    // '130 m²'
   @IsOptional() @IsString() rooms?: string;
-  @IsOptional() @IsEnum(PropertyCategory) category?: PropertyCategory;
-  @IsOptional() @IsNumber() lat?: number;
-  @IsOptional() @IsNumber() lng?: number;
-  @IsOptional() @IsArray() @IsString({ each: true }) images?: string[];
-}
-
-export class UpdatePropertyDto extends CreatePropertyDto {
-  @IsOptional() @IsString() declare title: string;
+  @IsOptional() @IsString() floor?: string;
+  @IsOptional() @IsString() age?: string;
+  @IsOptional() @IsString() img?: string;
+  @IsOptional() @IsString() badge?: string;
   @IsOptional() @IsString() status?: string;
+  @IsOptional() @IsString() type?: string;    // 'Satılık' | 'Kiralık'
+  @IsOptional() @IsString() subtype?: string; // 'Daire' | 'Villa' | ...
+  @IsOptional() @IsArray() @IsNumber({}, { each: true }) coords?: number[]; // [lng, lat]
 }
 
-export class QueryPropertyDto {
-  @IsOptional() @IsString() category?: string;
+export class UpdatePropertyDto {
+  @IsOptional() @IsString() title?: string;
+  @IsOptional() @IsString() desc?: string;
+  @IsOptional() @IsString() location?: string;
   @IsOptional() @IsString() city?: string;
-  @IsOptional() @IsString() sort?: string;
-  @IsOptional() @Type(() => Number) @IsInt() @Min(0) minPrice?: number;
-  @IsOptional() @Type(() => Number) @IsInt() @Min(0) maxPrice?: number;
-  @IsOptional() @Type(() => Number) @IsInt() @Min(1) page?: number;
-  @IsOptional() @Type(() => Number) @IsInt() @Min(1) limit?: number;
+  @IsOptional() @IsString() price?: string;
+  @IsOptional() @IsString() size?: string;
+  @IsOptional() @IsString() rooms?: string;
+  @IsOptional() @IsString() floor?: string;
+  @IsOptional() @IsString() age?: string;
+  @IsOptional() @IsString() img?: string;
+  @IsOptional() @IsString() badge?: string;
+  @IsOptional() @IsString() status?: string;
+  @IsOptional() @IsString() type?: string;
+  @IsOptional() @IsString() subtype?: string;
+  @IsOptional() @IsArray() @IsNumber({}, { each: true }) coords?: number[];
 }

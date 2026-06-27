@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import mapboxgl from 'mapbox-gl'
-import { propertyList, categories } from '../data/properties'
+import { usePropertyData } from '../context/PropertiesContext'
 import { useApp } from '../context/AppContext'
 import { useAiAssistant } from '../context/AiAssistantContext'
 import { districts, districtBoundaries } from '../data/districts'
@@ -15,6 +15,7 @@ mapboxgl.accessToken = MAPBOX_TOKEN
 
 export default function Discover() {
   const navigate = useNavigate()
+  const { propertyList, categories } = usePropertyData()
   const { addToast, lists, addToList } = useApp()
   const { recordSearch } = useAiAssistant()
   const [activeCategory, setActiveCategory] = useState('Tümü')

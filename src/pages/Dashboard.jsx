@@ -5,8 +5,7 @@ import { useAuth } from '../context/AuthContext'
 import { useApp } from '../context/AppContext'
 import { useAppointments } from '../hooks/useAppointments'
 import { useCustomers } from '../hooks/useCustomers'
-import { dailyProperties } from '../data/daily'
-import { allProperties as allPropertiesData } from '../data/properties'
+import { usePropertyData } from '../context/PropertiesContext'
 import { MY_LISTINGS_ID } from '../data/lists'
 import { getAllPriceRatings } from '../utils/priceRating'
 import {
@@ -21,9 +20,10 @@ export default function Dashboard() {
   const { appointments, loading: appointmentsLoading } = useAppointments()
   const { customers, loading: customersLoading } = useCustomers()
   const { setActiveTab } = useContext(TabContext)
+  const { dailyProperties, allProperties: allPropertiesData } = usePropertyData()
 
   // Price ratings for the daily listings comparison
-  const priceRatings = useMemo(() => getAllPriceRatings(allPropertiesData), [])
+  const priceRatings = useMemo(() => getAllPriceRatings(allPropertiesData), [allPropertiesData])
 
   // User's own portfolio size
   const myPortfolioCount = lists[MY_LISTINGS_ID]?.items?.length || 0
