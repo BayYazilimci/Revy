@@ -13,7 +13,6 @@ import LoadingState from './components/ui/LoadingState'
 import { ROUTES } from './config'
 import Onboarding from './components/Onboarding'
 import BanScreen from './components/BanScreen'
-import { getStatusByUsername, getAccountByUsername, setAccountStatus, ACCOUNTS_EVENT } from './data/accounts'
 
 const ONBOARDING_KEY = 'fsbo_onboarding_seen'
 
@@ -39,12 +38,13 @@ function PageLoader() {
 }
 
 function AppLayout() {
-  const { isAuthenticated, user, logout } = useAuth()
+  const { isAuthenticated, user, logout, refreshUser } = useAuth()
   const { addToast } = useApp()
   const [activeTab, setActiveTab] = useState('anasayfa')
   const [tabParams, setTabParams] = useState({})
   const [showOnboarding, setShowOnboarding] = useState(false)
-  const [accountStatus, setAccountStatus_] = useState('aktif')
+  // Hesap durumu doğrudan backend'den gelen kullanıcıdan okunur
+  const accountStatus = user?.status || 'aktif'
   const location = useLocation()
 
   useEffect(() => {
@@ -53,18 +53,12 @@ function AppLayout() {
     }
   }, [isAuthenticated])
 
-  // Giriş yapmış hesabın yasak/kısıt durumunu canlı izle (admin panelinden değişebilir)
+  // Hesap durumu admin tarafından değişmiş olabilir → periyodik olarak backend'den tazele
   useEffect(() => {
-    if (!user?.username) { setAccountStatus_('aktif'); return }
-    const update = () => setAccountStatus_(getStatusByUsername(user.username))
-    update()
-    window.addEventListener(ACCOUNTS_EVENT, update)
-    window.addEventListener('storage', update)
-    return () => {
-      window.removeEventListener(ACCOUNTS_EVENT, update)
-      window.removeEventListener('storage', update)
-    }
-  }, [user])
+    if (!isAuthenticated) return
+    const timer = setInterval(() => { refreshUser() }, 30000)
+    return () => clearInterval(timer)
+  }, [isAuthenticated, refreshUser])
 
   // Appointment Reminder System
   useEffect(() => {
@@ -139,14 +133,7 @@ function AppLayout() {
 
   // Yasaklı hesap → her sayfanın önünde tam ekran yasak ekranı (o hesap için)
   if (accountStatus === 'banli') {
-    const acc = getAccountByUsername(user?.username) || { name: user?.name, email: user?.email, role: user?.role }
-    return (
-      <BanScreen
-        account={acc}
-        onLogout={logout}
-        onAdminRestore={() => setAccountStatus(user.username, 'aktif', { banReason: undefined })}
-      />
-    )
+    return <BanScreen account={user} onLogout={logout} />
   }
 
   const pathname = location.pathname

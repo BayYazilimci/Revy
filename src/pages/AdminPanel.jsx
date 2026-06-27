@@ -2,54 +2,29 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useAccounts } from '../hooks/useAccounts'
+import { useAdminOverview } from '../hooks/useAdminOverview'
 import {
   Users, UserCheck, UserPlus, Crown, ShieldCheck, Search, Activity,
   TrendingUp, TrendingDown, MoreVertical, Ban, Eye, ArrowUpRight,
   Circle, Clock, MapPin, Globe, Server, Cpu, AlertTriangle, CheckCircle2,
   LayoutDashboard, LogOut, Bell, Settings, Menu, X,
   Phone, Smartphone, Calendar, Lock, Unlock, ShieldOff, ArrowUpDown,
-  Mail, Building2, ChevronRight, Wifi
+  Mail, Building2, ChevronRight, Wifi, Home, CalendarClock, Database
 } from 'lucide-react'
 
 /* ------------------------------------------------------------------ */
-/*  Mock veri — sadece front-end (gerçek API yok)                      */
+/*  Veriler gerçek backend'den gelir (/admin/overview, /admin/accounts) */
 /* ------------------------------------------------------------------ */
 
-const KPIS = [
-  { key: 'total', label: 'Toplam Kullanıcı', value: 8421, delta: +12.4, icon: Users, color: '#e3d10d', bg: 'rgba(227,209,13,.15)' },
-  { key: 'active', label: 'Aktif (24s)', value: 3187, delta: +6.8, icon: UserCheck, color: '#10b981', bg: 'rgba(16,185,129,.12)' },
-  { key: 'new', label: 'Yeni Kayıt (7g)', value: 642, delta: +21.1, icon: UserPlus, color: '#3b82f6', bg: 'rgba(59,130,246,.12)' },
-  { key: 'premium', label: 'Premium Üye', value: 1294, delta: -2.3, icon: Crown, color: '#8b5cf6', bg: 'rgba(139,92,246,.12)' },
-]
+// Backend KPI'larında ikon adı string olarak gelir → bileşene eşle
+const KPI_ICONS = { Users, UserCheck, UserPlus, Crown }
 
-// Kullanıcı büyümesi (son 12 ay)
-const GROWTH = [
-  { m: 'Tem', v: 3200 }, { m: 'Ağu', v: 3650 }, { m: 'Eyl', v: 3980 },
-  { m: 'Eki', v: 4510 }, { m: 'Kas', v: 5020 }, { m: 'Ara', v: 5460 },
-  { m: 'Oca', v: 5980 }, { m: 'Şub', v: 6340 }, { m: 'Mar', v: 6890 },
-  { m: 'Nis', v: 7410 }, { m: 'May', v: 7980 }, { m: 'Haz', v: 8421 },
-]
-
-// Haftalık aktif kullanıcı (bar)
-const WEEKLY = [
-  { d: 'Pzt', v: 2400 }, { d: 'Sal', v: 2900 }, { d: 'Çar', v: 3100 },
-  { d: 'Per', v: 2750 }, { d: 'Cum', v: 3450 }, { d: 'Cmt', v: 3187 }, { d: 'Paz', v: 2100 },
-]
-
-// Plan dağılımı (donut)
-const PLANS = [
-  { label: 'Ücretsiz', value: 5840, color: '#94a3b8' },
-  { label: 'Pro', value: 1980, color: '#e3d10d' },
-  { label: 'Kurumsal', value: 601, color: '#8b5cf6' },
-]
-
-const ACTIVITY = [
-  { id: 1, type: 'signup', text: 'Yeni kullanıcı kaydoldu', who: 'omer.celik', time: '2 dk', color: '#3b82f6' },
-  { id: 2, type: 'upgrade', text: 'Pro plana yükseltti', who: 'selin.aydin', time: '9 dk', color: '#e3d10d' },
-  { id: 3, type: 'listing', text: '3 yeni ilan yayınladı', who: 'mert.k', time: '17 dk', color: '#10b981' },
-  { id: 4, type: 'report', text: 'İlan şikayet edildi', who: 'sistem', time: '23 dk', color: '#ef4444' },
-  { id: 5, type: 'login', text: 'Şüpheli giriş engellendi', who: 'güvenlik', time: '41 dk', color: '#f59e0b' },
-]
+function formatUptime(sec = 0) {
+  const h = Math.floor(sec / 3600)
+  const m = Math.floor((sec % 3600) / 60)
+  if (h > 0) return `${h}s ${m}dk`
+  return `${m}dk`
+}
 
 const STATUS_STYLE = {
   aktif: { dot: '#10b981', text: 'text-emerald-600', bg: 'bg-emerald-500/10', border: 'border-emerald-500/15', label: 'Aktif' },
@@ -442,6 +417,13 @@ export default function AdminPanel() {
   const navigate = useNavigate()
   const { user } = useAuth()
   const { accounts, setStatus } = useAccounts()
+  const { data: overview } = useAdminOverview()
+  const kpis = overview?.kpis || []
+  const growth = overview?.growth || []
+  const weekly = overview?.weekly || []
+  const plans = overview?.plans || []
+  const activity = overview?.activity || []
+  const health = overview?.health
   const [view, setView] = useState('genel')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -604,9 +586,8 @@ export default function AdminPanel() {
       {view === 'genel' && (<>
       {/* 2. KPI kartları */}
       <div className="px-4 sm:px-6 lg:px-8 mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {KPIS.map((k, i) => {
-          const Icon = k.icon
-          const up = k.delta >= 0
+        {kpis.map((k, i) => {
+          const Icon = KPI_ICONS[k.icon] || Users
           return (
             <div key={k.key}
               className="flex flex-col p-4 bg-white rounded-2xl border border-cardBorder hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group relative overflow-hidden animate-fade-up"
@@ -616,10 +597,6 @@ export default function AdminPanel() {
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: k.bg }}>
                   <Icon size={18} style={{ color: k.color }} strokeWidth={2.5} />
                 </div>
-                <span className={`flex items-center gap-0.5 text-[10px] font-extrabold px-1.5 py-0.5 rounded-full ${up ? 'text-emerald-600 bg-emerald-500/10' : 'text-red-500 bg-red-500/10'}`}>
-                  {up ? <TrendingUp size={11} /> : <TrendingDown size={11} />}
-                  {up ? '+' : ''}{k.delta}%
-                </span>
               </div>
               <span className="text-2xl font-black text-deep leading-none mt-4">
                 <CountUp value={k.value} />
@@ -643,7 +620,7 @@ export default function AdminPanel() {
             </div>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cream border border-cardBorder text-deep">Son 12 ay</span>
           </div>
-          <GrowthChart data={GROWTH} />
+          {growth.length > 0 ? <GrowthChart data={growth} /> : <div className="h-[240px] flex items-center justify-center text-xs font-bold text-gray-400">Veri yükleniyor…</div>}
         </div>
 
         {/* Plan dağılımı */}
@@ -654,7 +631,7 @@ export default function AdminPanel() {
             </div>
             <h2 className="text-sm font-extrabold text-deep">Abonelik Dağılımı</h2>
           </div>
-          <PlanDonut data={PLANS} />
+          {plans.length > 0 ? <PlanDonut data={plans} /> : <div className="h-40 flex items-center justify-center text-xs font-bold text-gray-400">Veri yükleniyor…</div>}
         </div>
       </div>
       </>)}
@@ -670,7 +647,7 @@ export default function AdminPanel() {
             </div>
             <h2 className="text-sm font-extrabold text-deep">Haftalık Aktif Kullanıcı</h2>
           </div>
-          <WeeklyBars data={WEEKLY} />
+          <WeeklyBars data={weekly.length > 0 ? weekly : [{ d: '—', v: 0 }]} />
         </div>
 
         {/* Sistem sağlığı */}
@@ -681,16 +658,28 @@ export default function AdminPanel() {
             </div>
             <h2 className="text-sm font-extrabold text-deep">Sistem Sağlığı</h2>
           </div>
-          <div className="space-y-4">
-            <HealthBar label="Sunucu Yükü" value={42} color="#10b981" icon={Cpu} />
-            <HealthBar label="API Yanıt Oranı" value={99} color="#3b82f6" icon=
-              {Globe} />
-            <HealthBar label="Bellek Kullanımı" value={68} color="#e3a30d" icon={Server} />
-            <HealthBar label="Hata Oranı" value={3} color="#ef4444" icon={AlertTriangle} />
+          <div className="space-y-3">
+            {[
+              { label: 'Veritabanı', value: health?.db === 'up' ? 'Bağlı' : 'Kapalı', icon: Database, ok: health?.db === 'up' },
+              { label: 'Çalışma süresi', value: health ? formatUptime(health.uptimeSec) : '—', icon: Server, ok: true },
+              { label: 'Toplam kullanıcı', value: health?.users ?? '—', icon: Users, ok: true },
+              { label: 'Toplam ilan', value: health?.properties ?? '—', icon: Home, ok: true },
+              { label: 'Toplam randevu', value: health?.appointments ?? '—', icon: CalendarClock, ok: true },
+            ].map((m, i) => {
+              const Icon = m.icon
+              return (
+                <div key={i} className="flex items-center justify-between py-1.5">
+                  <span className="flex items-center gap-2 text-[11px] font-bold text-deep">
+                    <Icon size={13} style={{ color: m.ok ? '#10b981' : '#ef4444' }} /> {m.label}
+                  </span>
+                  <span className="text-xs font-extrabold" style={{ color: m.ok ? '#1e1b2e' : '#ef4444' }}>{m.value}</span>
+                </div>
+              )
+            })}
           </div>
           <div className="mt-5 flex items-center gap-2 p-3 rounded-2xl bg-emerald-50/60 border border-emerald-100/60">
             <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
-            <span className="text-[11px] font-bold text-emerald-700">Tüm sistemler sorunsuz çalışıyor</span>
+            <span className="text-[11px] font-bold text-emerald-700">Canlı backend bağlantısı aktif</span>
           </div>
         </div>
 
@@ -703,7 +692,7 @@ export default function AdminPanel() {
             <h2 className="text-sm font-extrabold text-deep">Son Aktiviteler</h2>
           </div>
           <div className="space-y-1 flex-1">
-            {ACTIVITY.map((a, i) => (
+            {activity.map((a, i) => (
               <div key={a.id}
                 className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-cream/60 transition-colors animate-fade-up"
                 style={{ animationDelay: `${i * 0.09}s`, opacity: 0 }}>
@@ -715,6 +704,9 @@ export default function AdminPanel() {
                 <span className="text-[10px] font-bold text-gray-300 flex-shrink-0">{a.time}</span>
               </div>
             ))}
+            {activity.length === 0 && (
+              <p className="text-xs font-bold text-gray-400 py-8 text-center">Henüz aktivite yok.</p>
+            )}
           </div>
         </div>
       </div>

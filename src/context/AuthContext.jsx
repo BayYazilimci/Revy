@@ -42,6 +42,15 @@ export function AuthProvider({ children }) {
     return () => { alive = false }
   }, [applyUser])
 
+  // Oturumu backend'den tazele (örn. hesap durumu admin tarafından değişmiş olabilir)
+  const refreshUser = useCallback(async () => {
+    if (!tokenStore.getAccess()) return null
+    const u = await authApi.me()
+    if (u) applyUser(u)
+    else { applyUser(null); tokenStore.clear() }
+    return u
+  }, [applyUser])
+
   const login = useCallback(async (username, password) => {
     setAuthError(null)
     try {
@@ -171,7 +180,7 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider value={{
       user, isAuthenticated: !!user, authError,
-      login, register, logout, clearError, resetPassword, googleLogin,
+      login, register, logout, clearError, resetPassword, googleLogin, refreshUser,
       completeProfile, updateProfile, updatePassword,
       subscribeToPlan, cancelSubscription, getInvoices,
       hasRole,
