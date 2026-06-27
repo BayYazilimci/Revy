@@ -6,7 +6,7 @@ import { useAdminOverview } from '../hooks/useAdminOverview'
 import {
   Users, UserCheck, UserPlus, Crown, ShieldCheck, Search, Activity,
   TrendingUp, TrendingDown, MoreVertical, Ban, Eye, ArrowUpRight,
-  Circle, Clock, MapPin, Globe, Server, Cpu, AlertTriangle, CheckCircle2,
+  Circle, Clock, MapPin, Globe, Server, Cpu, CheckCircle2,
   LayoutDashboard, LogOut, Bell, Settings, Menu, X,
   Phone, Smartphone, Calendar, Lock, Unlock, ShieldOff, ArrowUpDown,
   Mail, Building2, ChevronRight, Wifi, Home, CalendarClock, Database
@@ -346,12 +346,6 @@ function UserDetailDrawer({ account, isSelf, onClose, onStatus }) {
 
         {/* aksiyonlar */}
         <div className="flex-shrink-0 border-t border-cardBorder bg-white p-4">
-          {isSelf && (
-            <p className="text-[11px] font-bold text-amber-600 bg-amber-50 border border-amber-100 rounded-xl px-3 py-2 mb-3 flex items-center gap-1.5">
-              <AlertTriangle size={13} /> Bu sizin hesabınız — banlarsanız oturumunuz yasak ekranına düşer.
-            </p>
-          )}
-
           {confirmBan ? (
             <div className="space-y-2 animate-slide-down">
               <input
