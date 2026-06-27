@@ -268,7 +268,7 @@ export default function Landing() {
                 <SparklesIcon /> Yapay Zeka Destekli Yeni Nesil Emlakçılık
               </div>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight text-deep">
-                Emlak <br className="hidden sm:inline" />
+                Emlak Portföyünüzü <br />
                 <span className="relative inline-block text-accentDark">
                   Yapay Zekayla
                   <span className="absolute bottom-1.5 left-0 w-full h-2 bg-accent/30 rounded-full -z-10"></span>
