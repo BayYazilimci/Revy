@@ -255,7 +255,7 @@ export default function Landing() {
       </header>
 
       {/* 2. Hero Section */}
-      <section className="relative pt-12 pb-24 md:py-32 overflow-hidden">
+      <section className="relative pt-6 pb-24 md:pt-16 md:pb-32 overflow-hidden">
         {/* Glow Spheres */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-accent/10 blur-[120px] pointer-events-none z-0"></div>
         <div className="absolute top-1/2 right-10 w-[300px] h-[300px] rounded-full bg-orange/5 blur-[90px] pointer-events-none z-0"></div>
@@ -268,7 +268,7 @@ export default function Landing() {
                 <SparklesIcon /> Yapay Zeka Destekli Yeni Nesil Emlakçılık
               </div>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight text-deep">
-                Emlak Portföyünüzü <br />
+                Emlak <br className="hidden sm:inline" />
                 <span className="relative inline-block text-accentDark">
                   Yapay Zekayla
                   <span className="absolute bottom-1.5 left-0 w-full h-2 bg-accent/30 rounded-full -z-10"></span>
