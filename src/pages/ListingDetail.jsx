@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import mapboxgl from 'mapbox-gl'
 import { usePropertyData } from '../context/PropertiesContext'
@@ -7,6 +7,7 @@ import { useCustomers } from '../hooks/useCustomers'
 import { useCustomerListings } from '../hooks/useCustomerListings'
 import { MY_LISTINGS_ID } from '../data/lists'
 
+import DefaultAvatar from '../components/DefaultAvatar'
 import NearbyPlaces from '../components/NearbyPlaces'
 import PriceAnalysis from '../components/PriceAnalysis'
 import PresentationBuilder from '../components/PresentationBuilder'
@@ -48,6 +49,7 @@ export default function ListingDetail() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [showGalleryModal, setShowGalleryModal] = useState(false)
   const [selectedPlace, setSelectedPlace] = useState(null)
+  const [resolvedCoords, setResolvedCoords] = useState(null)
   const routeLayerAdded = useRef(false)
 
   const presentationRef = useRef(null)
@@ -56,37 +58,72 @@ export default function ListingDetail() {
 
   const prop = properties[id]
 
-  const galleryImages = prop ? (
-    prop.all_images && prop.all_images.length > 0
-      ? prop.all_images.map((img, i) => ({ src: img, alt: `${prop.title} - Fotoğraf ${i + 1}` }))
-      : [
-          { src: prop.img, alt: prop.title },
-          { src: prop.img, alt: prop.title + ' - Detay' },
-          { src: prop.img, alt: prop.title + ' - İç Mekan' },
-          { src: prop.img, alt: prop.title + ' - Mutfak' },
-          { src: prop.img, alt: prop.title + ' - Banyo' },
-        ]
-  ) : []
+  const galleryImages = prop ? (() => {
+    const imgs = prop.all_images && prop.all_images.length > 0
+      ? prop.all_images
+      : (prop.img ? [prop.img] : [])
+    return imgs.filter(Boolean).map((img, i) => ({ src: img, alt: `${prop.title} - Fotoğraf ${i + 1}` }))
+  })() : []
+
+  const geocodeLocation = useCallback(async (location) => {
+    if (!MAPBOX_TOKEN || !location) return null
+    try {
+      const res = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location)}.json?access_token=${MAPBOX_TOKEN}&country=tr&limit=1`
+      )
+      const data = await res.json()
+      if (data.features && data.features.length > 0) {
+        return data.features[0].center
+      }
+    } catch {}
+    return null
+  }, [])
 
   useEffect(() => {
-    if (!prop?.coords || mapInstance.current || !mapContainer.current) return
-    mapInstance.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: prop.coords,
-      zoom: 15,
-      attributionControl: false,
-    })
-    mapInstance.current.on('load', () => {
-      new mapboxgl.Marker({ color: '#e3d10d' })
-        .setLngLat(prop.coords)
-        .addTo(mapInstance.current)
-    })
+    if (!prop) return
+    if (prop.coords) {
+      setResolvedCoords(prop.coords)
+    } else if (prop.location) {
+      geocodeLocation(prop.location).then(c => {
+        if (c) setResolvedCoords(c)
+      })
+    }
+  }, [prop?.id, prop?.coords, prop?.location, geocodeLocation])
+
+  useEffect(() => {
+    if (mapInstance.current || !mapContainer.current) return
+
+    const initMap = async (center) => {
+      mapInstance.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center,
+        zoom: 15,
+        attributionControl: false,
+      })
+      mapInstance.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-left')
+      mapInstance.current.on('load', () => {
+        new mapboxgl.Marker({ color: '#e3d10d' })
+          .setLngLat(center)
+          .addTo(mapInstance.current)
+      })
+    }
+
+    if (prop?.coords) {
+      initMap(prop.coords)
+    } else if (prop?.location) {
+      geocodeLocation(prop.location).then(center => {
+        if (center && !mapInstance.current) {
+          initMap(center)
+        }
+      })
+    }
+
     return () => {
       mapInstance.current?.remove()
       mapInstance.current = null
     }
-  }, [prop])
+  }, [prop, geocodeLocation])
 
   const handlePlaceSelect = (place) => {
     setSelectedPlace(prev => prev?.name === place.name && prev?.dist === place.dist ? null : place)
@@ -371,13 +408,48 @@ export default function ListingDetail() {
               </span>
             </div>
             <div className="absolute top-4 right-4 z-10 flex gap-2">
-              <button
-                className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-all duration-200 btn"
-                aria-label="Listeye Ekle"
-                onClick={() => setShowListPicker(!showListPicker)}
-              >
-                <FolderPlus size={18} className="text-gray-500" />
-              </button>
+              <div className="relative">
+                <button
+                  className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-all duration-200 btn"
+                  aria-label="Listeye Ekle"
+                  onClick={() => setShowListPicker(!showListPicker)}
+                >
+                  <FolderPlus size={18} className="text-gray-500" />
+                </button>
+                {showListPicker && (
+                  <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 p-2 z-50 animate-scale-in">
+                    <p className="text-[10px] font-semibold text-gray-400 px-2 py-1">Listeye ekle:</p>
+                    {Object.values(lists).map(list => {
+                      const inList = list.items.includes(prop.id)
+                      return (
+                        <button
+                          key={list.id}
+                          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold btn whitespace-nowrap transition-all"
+                          style={{
+                            background: inList ? list.color + '22' : 'transparent',
+                            color: '#1e1b2e',
+                            border: inList ? `1.5px solid ${list.color}` : '1.5px solid transparent'
+                          }}
+                          onClick={() => {
+                            if (inList) {
+                              removeFromList(list.id, prop.id)
+                              addToast(`"${prop.title}" "${list.name}" listesinden çıkarıldı`)
+                            } else {
+                              addToList(list.id, prop.id)
+                              addToast(`"${prop.title}" "${list.name}" listesine eklendi`)
+                            }
+                            setShowListPicker(false)
+                          }}
+                        >
+                          <div className="w-3 h-3 rounded flex-shrink-0" style={{ background: list.color }} />
+                          <span className="flex-1 text-left">{list.name}</span>
+                          {inList && <CheckCircle size={12} style={{ color: list.color }} strokeWidth={3} />}
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
               <button
                 className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-all duration-200 btn"
                 aria-label="Paylaş"
@@ -576,61 +648,33 @@ export default function ListingDetail() {
                 <MapPin size={16} className="text-gold" />
                 Konum
               </h3>
-              {prop.coords ? (
-                <div className="relative rounded-xl overflow-hidden bg-gray-100 mb-3 shadow-inner" style={{ height: '200px' }}>
-                  <div ref={mapContainer} className="w-full h-full" />
-                  <div className="absolute bottom-3 right-3">
-                    <button
-                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/90 backdrop-blur-sm text-xs font-bold text-navy shadow-sm hover:bg-white transition-all duration-200 btn"
-                      onClick={() => addToast('Harita görüntüleniyor...')}
-                    >
-                      <ExternalLink size={13} />
-                      Büyük Haritada Göster
-                    </button>
-                  </div>
+              <div className="relative rounded-xl overflow-hidden bg-gray-100 mb-3 shadow-inner" style={{ height: '200px' }}>
+                <div ref={mapContainer} className="w-full h-full" />
+                <div className="absolute bottom-3 right-3">
+                  <button
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/90 backdrop-blur-sm text-xs font-bold text-navy shadow-sm hover:bg-white transition-all duration-200 btn"
+                    onClick={() => {
+                      const q = encodeURIComponent(prop.location || prop.title || '')
+                      window.open(`https://www.mapbox.com/maps/?set_token=yes#15/${prop.coords ? prop.coords[1] + '/' + prop.coords[0] : ''}?q=${q}`, '_blank')
+                    }}
+                  >
+                    <ExternalLink size={13} />
+                    Büyük Haritada Göster
+                  </button>
                 </div>
-              ) : (
-                <div className="relative rounded-xl overflow-hidden bg-gray-100 mb-3 shadow-inner" style={{ height: '200px' }}>
-                  <div className="absolute inset-0 bg-[#e8ecf1]" style={{ backgroundImage: 'radial-gradient(circle at 20% 30%, #d0d8e0 0%, transparent 50%),radial-gradient(circle at 80% 70%, #c8d0d8 0%, transparent 40%),radial-gradient(circle at 50% 50%, #dce2e8 0%, transparent 60%)' }}>
-                    <div className="absolute inset-0" style={{ backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(255,255,255,.12) 40px,rgba(255,255,255,.12) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,255,255,.12) 40px,rgba(255,255,255,.12) 41px)' }}></div>
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-12 h-12 rounded-full bg-orange/90 flex items-center justify-center shadow-lg shadow-orange/20">
-                        <MapPin size={22} className="text-white" />
-                      </div>
-                      <span className="text-xs font-bold text-navy bg-white/80 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-sm">{prop.location}</span>
-                    </div>
-                  </div>
-                  <div className="absolute bottom-3 right-3">
-                    <button
-                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/90 backdrop-blur-sm text-xs font-bold text-navy shadow-sm hover:bg-white transition-all duration-200 btn"
-                      onClick={() => addToast('Harita görüntüleniyor...')}
-                    >
-                      <ExternalLink size={13} />
-                      Büyük Haritada Göster
-                    </button>
-                  </div>
-                </div>
-              )}
+              </div>
+
               <p className="text-sm text-gray-500 font-medium flex items-center gap-1.5">
                 <MapPin size={14} className="text-orange" />
                 {prop.location}
               </p>
-              {prop.coords && (
-                <div className="flex items-center gap-4 mt-2 text-xs text-gray-400">
-                  <span className="flex items-center gap-1"><Navigation size={12} />Marmaray 400 m</span>
-                  <span className="flex items-center gap-1"><Navigation size={12} />Metrobüs 600 m</span>
-                  <span className="flex items-center gap-1"><Navigation size={12} />Hastane 1.2 km</span>
-                </div>
-              )}
             </div>
 
             {/* Price Analysis */}
             <PriceAnalysis prop={prop} />
 
             {/* Nearby Places */}
-            <NearbyPlaces coords={prop.coords} onPlaceSelect={handlePlaceSelect} selectedPlace={selectedPlace} />
+            <NearbyPlaces coords={resolvedCoords || prop.coords} onPlaceSelect={handlePlaceSelect} selectedPlace={selectedPlace} />
 
             {/* PDF Presentation Builder */}
             <PresentationBuilder prop={prop} />
@@ -638,17 +682,13 @@ export default function ListingDetail() {
           </div>
 
           {/* RIGHT: Seller Card */}
-          <aside className="lg:w-80 flex-shrink-0">
-            <div className="sticky top-24 space-y-4">
+          <aside className="lg:w-80 flex-shrink-0" style={{ overflow: 'visible' }}>
+            <div className="sticky top-24 space-y-4" style={{ overflow: 'visible' }}>
 
               {/* Seller Card */}
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 animate-fade-up">
                 <div className="flex items-center gap-3 mb-4">
-                  <img
-                    src="https://i.pravatar.cc/100?img=11"
-                    alt="Ahmet Yılmaz"
-                    className="w-14 h-14 rounded-xl object-cover shadow-sm border border-gray-50"
-                  />
+                  <DefaultAvatar className="w-14 h-14 rounded-xl shadow-sm border border-gray-50" size={56} />
                   <div className="flex-1 min-w-0">
                     <h4 className="text-sm font-extrabold text-navy">Ahmet Yılmaz</h4>
                     <p className="text-xs text-gray-400 font-medium">Emlak Danışmanı</p>
@@ -690,49 +730,33 @@ export default function ListingDetail() {
                 </div>
               </div>
 
+              {/* Portföyüme Ekle */}
+              <button
+                className={`w-full h-11 rounded-xl text-sm font-bold transition-all duration-200 btn flex items-center justify-center gap-2 ${
+                  isInMyListings(prop.id)
+                    ? 'bg-green-50 border-2 border-green-300 text-green-700'
+                    : 'bg-green-600 text-white shadow-lg shadow-green-600/20'
+                }`}
+                onClick={() => {
+                  toggleMyListing(prop.id)
+                  addToast(isInMyListings(prop.id)
+                    ? `"${prop.title}" portföyden çıkarıldı`
+                    : `"${prop.title}" portföyüme eklendi`
+                  )
+                }}
+              >
+                <Bookmark size={16} fill={isInMyListings(prop.id) ? 'currentColor' : 'none'} />
+                {isInMyListings(prop.id) ? 'Portföyümde' : 'Portföyüme Ekle'}
+              </button>
+
               {/* List Picker */}
-              <div className="relative">
-                <button
-                  className="w-full h-10 rounded-xl bg-white border border-gray-100 shadow-sm text-xs font-bold text-gray-500 hover:text-navy transition-all duration-200 btn flex items-center justify-center gap-2"
-                  onClick={() => setShowListPicker(!showListPicker)}
-                >
-                  <FolderPlus size={14} />
-                  Listeye Ekle
-                </button>
-                {showListPicker && (
-                  <div className="absolute bottom-full left-0 right-0 mb-2 bg-white rounded-2xl shadow-xl border border-gray-100 p-2 z-50 animate-scale-in">
-                    <p className="text-[10px] font-semibold text-gray-400 px-2 py-1">Listeye ekle:</p>
-                    {Object.values(lists).map(list => {
-                      const inList = list.items.includes(prop.id)
-                      return (
-                        <button
-                          key={list.id}
-                          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold btn whitespace-nowrap transition-all"
-                          style={{
-                            background: inList ? list.color + '22' : 'transparent',
-                            color: '#1e1b2e',
-                            border: inList ? `1.5px solid ${list.color}` : '1.5px solid transparent'
-                          }}
-                          onClick={() => {
-                            if (inList) {
-                              removeFromList(list.id, prop.id)
-                              addToast(`"${prop.title}" "${list.name}" listesinden çıkarıldı`)
-                            } else {
-                              addToList(list.id, prop.id)
-                              addToast(`"${prop.title}" "${list.name}" listesine eklendi`)
-                            }
-                            setShowListPicker(false)
-                          }}
-                        >
-                          <div className="w-3 h-3 rounded flex-shrink-0" style={{ background: list.color }} />
-                          <span className="flex-1 text-left">{list.name}</span>
-                          {inList && <CheckCircle size={12} style={{ color: list.color }} strokeWidth={3} />}
-                        </button>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
+              <button
+                className="w-full h-10 rounded-xl bg-white border border-gray-100 shadow-sm text-xs font-bold text-gray-500 hover:text-navy transition-all duration-200 btn flex items-center justify-center gap-2"
+                onClick={() => setShowListPicker(!showListPicker)}
+              >
+                <FolderPlus size={14} />
+                Listeye Ekle
+              </button>
 
               {/* Safety Tips */}
               <div className="bg-amber-50/60 border border-amber-100 rounded-2xl p-4 animate-fade-up">
@@ -846,7 +870,7 @@ export default function ListingDetail() {
       {/* HIDDEN PRESENTATION TEMPLATE */}
       <div ref={presentationRef} style={{ position: 'absolute', left: '-9999px', top: 0, width: '794px', background: '#fff', fontFamily: 'Plus Jakarta Sans, sans-serif', overflow: 'hidden' }}>
         <div style={{ position: 'relative', width: '100%', height: '420px', overflow: 'hidden' }}>
-          <img src={prop.img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          <img src={prop.all_images && prop.all_images.length > 0 ? prop.all_images[0] : prop.img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 50%)' }} />
           <div style={{ position: 'absolute', top: '28px', right: '28px', background: '#e3d10d', color: '#1e1b2e', padding: '6px 18px', borderRadius: '8px', fontWeight: 800, fontSize: '13px', letterSpacing: '1px' }}>REVY</div>
           <div style={{ position: 'absolute', bottom: '32px', left: '32px' }}>
@@ -1319,8 +1343,8 @@ function IlanlarimDetailView({ prop }) {
           </div>
 
           {/* NEARBY PLACES */}
-            {prop.coords && (
-            <NearbyPlaces coords={prop.coords} />
+            {(resolvedCoords || prop.coords) && (
+            <NearbyPlaces coords={resolvedCoords || prop.coords} />
           )}
 
           {/* PRICE ANALYSIS */}
@@ -1332,7 +1356,7 @@ function IlanlarimDetailView({ prop }) {
           {/* SELLER */}
           <div className="bg-white rounded-2xl p-5 shadow-sm border border-cardBorder">
             <div className="flex items-center gap-3">
-              <img src="https://i.pravatar.cc/80?img=11" alt="Satıcı" className="w-12 h-12 rounded-full object-cover" />
+              <DefaultAvatar className="w-12 h-12 rounded-full" size={48} />
               <div>
                 <h3 className="text-sm font-extrabold" style={{ color: '#1e1b2e' }}>Ahmet Yılmaz</h3>
                 <p className="text-xs text-gray-400 font-medium">Emlak Danışmanı</p>

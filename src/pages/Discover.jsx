@@ -15,7 +15,7 @@ mapboxgl.accessToken = MAPBOX_TOKEN
 
 export default function Discover() {
   const navigate = useNavigate()
-  const { propertyList, categories } = usePropertyData()
+  const { allProperties, categories } = usePropertyData()
   const { addToast, lists, addToList } = useApp()
   const { recordSearch } = useAiAssistant()
   const [activeCategory, setActiveCategory] = useState('Tümü')
@@ -41,7 +41,7 @@ export default function Discover() {
   const [maxSize, setMaxSize] = useState('')
   const [visibleCount, setVisibleCount] = useState(24)
 
-  const parsePrice = (str) => parseInt(str.replace(/[₺.]/g, ''))
+  const parsePrice = (str) => typeof str === 'number' ? str : parseInt(String(str).replace(/[₺.]/g, ''))
 
   const sortOptions = [
     { label: 'Son eklenen', value: 'newest' },
@@ -58,26 +58,26 @@ export default function Discover() {
 
   const districtOptions = useMemo(() => {
     const set = new Set()
-    propertyList.forEach(p => set.add(parseLocation(p.location).district))
+    allProperties.forEach(p => set.add(parseLocation(p.location).district))
     return Array.from(set).sort()
-  }, [])
+  }, [allProperties])
 
   const neighborhoodOptions = useMemo(() => {
     const set = new Set()
-    propertyList.forEach(p => {
+    allProperties.forEach(p => {
       const parsed = parseLocation(p.location)
       if (!filterDistrict || parsed.district === filterDistrict) {
         if (parsed.neighborhood) set.add(parsed.neighborhood)
       }
     })
     return Array.from(set).sort()
-  }, [filterDistrict])
+  }, [allProperties, filterDistrict])
 
   const roomOptions = useMemo(() => {
     const set = new Set()
-    propertyList.forEach(p => set.add(p.rooms))
+    allProperties.forEach(p => set.add(p.rooms))
     return Array.from(set).sort()
-  }, [])
+  }, [allProperties])
 
   const mapDistrictId = useMemo(() => {
     if (!filterDistrict) return 'all'
@@ -88,7 +88,7 @@ export default function Discover() {
   const activeDist = districts.find(d => d.id === mapDistrictId) || districts[0]
 
   const filteredProperties = useMemo(() => {
-    let result = propertyList.filter(prop => {
+    let result = allProperties.filter(prop => {
       if (activeCategory !== 'Tümü') {
         if (['Satılık', 'Kiralık'].includes(activeCategory)) {
           if (prop.type !== activeCategory) return false
@@ -129,7 +129,7 @@ export default function Discover() {
         const q = searchQuery.toLowerCase()
         const inTitle = prop.title.toLowerCase().includes(q)
         const inLocation = prop.location.toLowerCase().includes(q)
-        const inDesc = prop.desc.toLowerCase().includes(q)
+        const inDesc = (prop.description || '').toLowerCase().includes(q)
         if (!inTitle && !inLocation && !inDesc) return false
       }
 
@@ -143,7 +143,7 @@ export default function Discover() {
     }
 
     return result
-  }, [activeCategory, minPrice, maxPrice, filterDistrict, filterNeighborhood, filterRooms, minSize, maxSize, locationFilter, searchQuery, sortBy])
+  }, [allProperties, activeCategory, minPrice, maxPrice, filterDistrict, filterNeighborhood, filterRooms, minSize, maxSize, locationFilter, searchQuery, sortBy])
 
   const clearFilters = () => {
     setActiveCategory('Tümü')
@@ -747,13 +747,13 @@ export default function Discover() {
               <div className="p-4">
                 <div className="flex items-start justify-between gap-2 mb-1.5">
                   <h3 className="text-sm font-extrabold leading-snug" style={{ color: '#1e1b2e' }}>{prop.title}</h3>
-                  <span className="text-xs font-black whitespace-nowrap" style={{ color: '#1e1b2e' }}>{prop.price}</span>
+                  <span className="text-xs font-black whitespace-nowrap" style={{ color: '#1e1b2e' }}>{prop.priceText || prop.price}</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium mb-2.5">
                   <MapPin size={12} />
                   <span>{prop.location}</span>
                   <span className="w-1 h-1 rounded-full bg-gray-300"></span>
-                  <span>{prop.size}</span>
+                  <span>{prop.sizeText || prop.size}</span>
                 </div>
                 <div className="flex gap-2">
                   <button

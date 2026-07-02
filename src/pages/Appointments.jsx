@@ -2,13 +2,13 @@ import { useState, useEffect, useMemo, useContext } from 'react'
 import { useAppointments } from '../hooks/useAppointments'
 import { useCustomers } from '../hooks/useCustomers'
 import { useApp } from '../context/AppContext'
-import { TabContext } from '../App'
+import { TabContext } from '../context/TabContext'
 import { usePropertyData } from '../context/PropertiesContext'
 import { MY_LISTINGS_ID } from '../data/lists'
 import { 
   Calendar as CalendarIcon, Clock, MapPin, FileText, Plus, X, 
   Trash2, Pencil, ChevronLeft, ChevronRight, AlertTriangle, 
-  User, CheckCircle, Info, RefreshCw, CalendarDays, Home
+  User, CheckCircle, Info, RefreshCw, CalendarDays, Home, Phone
 } from 'lucide-react'
 
 // Month names in Turkish
@@ -414,6 +414,22 @@ export default function Appointments() {
     return [...list].sort((a, b) => a.time.localeCompare(b.time))
   }, [appointmentsByDate, selectedDateStr])
 
+  // Find customer phone by attendeeId or name
+  const findCustomerPhone = (attendeeId, attendeeName) => {
+    if (attendeeId) {
+      const cust = customers.find(c => c.id === attendeeId)
+      if (cust?.telefon) return cust.telefon
+    }
+    if (attendeeName) {
+      const cust = customers.find(c => {
+        const fullName = `${c.ad} ${c.soyad}`.trim().toLowerCase()
+        return fullName === attendeeName.trim().toLowerCase()
+      })
+      if (cust?.telefon) return cust.telefon
+    }
+    return null
+  }
+
   // Get formatted end time based on start time and duration
   const getEndTime = (startTimeStr, durationMin) => {
     if (!startTimeStr) return ''
@@ -758,6 +774,20 @@ export default function Appointments() {
                           
                           {/* Quick Actions */}
                           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            {(() => {
+                              const phone = findCustomerPhone(app.attendeeId, app.attendeeName)
+                              if (!phone) return null
+                              return (
+                                <a
+                                  href={`tel:${phone}`}
+                                  className="w-7 h-7 rounded-lg hover:bg-green-50 border border-transparent hover:border-green-100 flex items-center justify-center btn text-gray-400 hover:text-green-600 shadow-sm"
+                                  title={`Hızlı Ara: ${phone}`}
+                                  onClick={e => e.stopPropagation()}
+                                >
+                                  <Phone size={11} />
+                                </a>
+                              )
+                            })()}
                             <button
                               onClick={() => handleEditOpen(app)}
                               className="w-7 h-7 rounded-lg hover:bg-white border border-transparent hover:border-cardBorder flex items-center justify-center btn text-gray-400 hover:text-deep shadow-sm"
@@ -942,6 +972,20 @@ export default function Appointments() {
                   >
                     Kapat
                   </button>
+                  {(() => {
+                    const phone = findCustomerPhone(selectedApp?.attendeeId, selectedApp?.attendeeName)
+                    if (!phone) return null
+                    return (
+                      <a
+                        href={`tel:${phone}`}
+                        className="py-3 px-5 rounded-2xl text-xs font-extrabold border border-green-200 hover:bg-green-50 text-green-600 transition-all btn shrink-0 flex items-center gap-1.5"
+                        title={`Hızlı Ara: ${phone}`}
+                      >
+                        <Phone size={13} />
+                        Ara
+                      </a>
+                    )
+                  })()}
                   <button 
                     className="py-3 px-5 rounded-2xl text-xs font-extrabold border border-red-200 hover:bg-red-50 text-red-500 transition-all btn shrink-0" 
                     onClick={() => handleDelete(selectedApp?.id)}

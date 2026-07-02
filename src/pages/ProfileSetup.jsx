@@ -70,7 +70,6 @@ export default function ProfileSetup() {
   const handleAvatarSelect = (e) => {
     const file = e.target.files?.[0]
     if (!file) return
-    setAvatarFile(file)
     const reader = new FileReader()
     reader.onload = (ev) => setAvatarPreview(ev.target.result)
     reader.readAsDataURL(file)
@@ -78,7 +77,7 @@ export default function ProfileSetup() {
 
   const handleSubmit = async () => {
     setLoading(true)
-    await completeProfile({
+    const ok = await completeProfile({
       nick: nick || user?.name || '',
       age,
       education,
@@ -91,7 +90,7 @@ export default function ProfileSetup() {
       certificates,
     })
     setLoading(false)
-    navigate('/', { replace: true })
+    if (ok) navigate('/', { replace: true })
   }
 
   const canContinue = () => {

@@ -1,87 +1,120 @@
-import { apiClient } from './client'
-import { defaultLists } from '../data/lists'
+import { supabase } from './supabase'
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false'
-
-let mockLists = { ...defaultLists }
-let mockCounter = 0
+function toClient(l) {
+  if (!l) return null
+  return {
+    id: l.id,
+    userId: l.user_id,
+    name: l.name,
+    color: l.color,
+    icon: l.icon,
+    createdAt: l.created_at,
+    items: (l.list_items || []).map(i => ({
+      id: i.id,
+      propertyId: i.property_id,
+      addedAt: i.added_at,
+      notes: i.notes || '',
+    })),
+    user_id: undefined,
+    created_at: undefined,
+    list_items: undefined,
+  }
+}
 
 export const listsApi = {
   async getAll() {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 50))
-      return Object.values(mockLists)
-    }
-    return apiClient.get('/lists')
+    const { data, error } = await supabase
+      .from('lists')
+      .select('*, list_items(*)')
+      .order('created_at', { ascending: false })
+    if (error) throw new Error(error.message)
+    return (data || []).map(toClient)
   },
 
   async getById(id) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 30))
-      return mockLists[id] || null
-    }
-    return apiClient.get(`/lists/${id}`)
+    const { data, error } = await supabase
+      .from('lists')
+      .select('*, list_items(*)')
+      .eq('id', id)
+      .single()
+    if (error) throw new Error(error.message)
+    return toClient(data)
   },
 
   async create(data) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 100))
-      const id = 'l' + Date.now().toString(36) + (mockCounter++).toString(36)
-      const colors = ['#1e1b2e', '#e3d10d', '#3b82f6', '#8b5cf6', '#dc2626', '#059669', '#d97706']
-      const icons = ['heart', 'home', 'trending-up', 'umbrella', 'building-2', 'sparkles', 'star']
-      const list = {
-        id,
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) throw new Error('Oturum bulunamadı.')
+    const { data: result, error } = await supabase
+      .from('lists')
+      .insert({
+        user_id: session.user.id,
         name: data.name,
-        desc: data.desc || '',
-        items: [],
-        color: colors[Math.floor(Math.random() * colors.length)],
-        icon: icons[Math.floor(Math.random() * icons.length)],
-      }
-      mockLists[id] = list
-      return list
-    }
-    return apiClient.post('/lists', data)
+        color: data.color,
+        icon: data.icon,
+      })
+      .select('*, list_items(*)')
+      .single()
+    if (error) throw new Error(error.message)
+    return toClient(result)
   },
 
   async update(id, data) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 80))
-      if (!mockLists[id]) throw new Error('List not found')
-      mockLists[id] = { ...mockLists[id], name: data.name, desc: data.desc ?? mockLists[id].desc }
-      return mockLists[id]
-    }
-    return apiClient.put(`/lists/${id}`, data)
+    const payload = {}
+    if (data.name !== undefined) payload.name = data.name
+    if (data.color !== undefined) payload.color = data.color
+    if (data.icon !== undefined) payload.icon = data.icon
+
+    const { data: result, error } = await supabase
+      .from('lists')
+      .update(payload)
+      .eq('id', id)
+      .select('*, list_items(*)')
+      .single()
+    if (error) throw new Error(error.message)
+    return toClient(result)
   },
 
   async delete(id) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 80))
-      if (!mockLists[id]) throw new Error('List not found')
-      delete mockLists[id]
-      return { success: true }
-    }
-    return apiClient.delete(`/lists/${id}`)
+    const { error } = await supabase
+      .from('lists')
+      .delete()
+      .eq('id', id)
+    if (error) throw new Error(error.message)
   },
 
   async addItem(listId, propertyId) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 50))
-      if (!mockLists[listId]) throw new Error('List not found')
-      if (!mockLists[listId].items.includes(propertyId)) {
-        mockLists[listId].items.push(propertyId)
-      }
-      return mockLists[listId]
+    const { data: existing } = await supabase
+      .from('list_items')
+      .select('id')
+      .eq('list_id', listId)
+      .eq('property_id', propertyId)
+      .maybeSingle()
+    if (!existing) {
+      const { error } = await supabase
+        .from('list_items')
+        .insert({ list_id: listId, property_id: propertyId })
+      if (error) throw new Error(error.message)
     }
-    return apiClient.post(`/lists/${listId}/items`, { propertyId })
+    return this.getById(listId)
   },
 
   async removeItem(listId, propertyId) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 50))
-      if (!mockLists[listId]) throw new Error('List not found')
-      mockLists[listId].items = mockLists[listId].items.filter(i => i !== propertyId)
-      return mockLists[listId]
-    }
-    return apiClient.delete(`/lists/${listId}/items/${propertyId}`)
-  }
+    const { error } = await supabase
+      .from('list_items')
+      .delete()
+      .eq('list_id', listId)
+      .eq('property_id', propertyId)
+    if (error) throw new Error(error.message)
+    return this.getById(listId)
+  },
+
+  async updateItemNote(listId, propertyId, notes) {
+    const { error } = await supabase
+      .from('list_items')
+      .update({ notes: notes || '' })
+      .eq('list_id', listId)
+      .eq('property_id', propertyId)
+    if (error) throw new Error(error.message)
+    return this.getById(listId)
+  },
 }

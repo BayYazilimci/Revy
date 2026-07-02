@@ -29,9 +29,9 @@ const STEPS = [
   {
     title: 'Yapay Zeka & Dahası',
     subtitle: 'Akıllı asistanınızla tanışın',
-    desc: 'AI asistanınıza doğal dilde sorular sorun, günlük öneriler alın ve müşterilerinizle kolayca iletişim kurun.',
+    desc: 'FSBOAI asistanınıza doğal dilde sorular sorun, günlük öneriler alın ve müşterilerinizle kolayca iletişim kurun.',
     items: [
-      { label: 'AI Asistan', icon: Bot, color: '#e3d10d', desc: 'Doğal dilde sorular sorun, anında yanıt alın' },
+      { label: 'FSBOAI', icon: Bot, color: '#e3d10d', desc: 'Doğal dilde sorular sorun, anında yanıt alın' },
       { label: 'Günlük', icon: Calendar, color: '#059669', desc: 'Size özel günlük ilan önerileri' },
       { label: 'Mesajlaşma', icon: MessageCircle, color: '#3b82f6', desc: 'Müşterilerinizle hızlı iletişim' },
     ],

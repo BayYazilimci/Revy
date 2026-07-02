@@ -1,17 +1,18 @@
 import { useContext, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { TabContext } from '../App'
+import { TabContext } from '../context/TabContext'
 import { useAuth } from '../context/AuthContext'
 import { useApp } from '../context/AppContext'
 import { useAppointments } from '../hooks/useAppointments'
 import { useCustomers } from '../hooks/useCustomers'
 import { usePropertyData } from '../context/PropertiesContext'
 import { MY_LISTINGS_ID } from '../data/lists'
-import { getAllPriceRatings } from '../utils/priceRating'
+import { getRatingsForList } from '../utils/priceRating'
 import {
   Building2, Compass, Bookmark, Users, Bot, Sun, Calendar,
   Plus, ArrowUpRight, MapPin, Clock, ArrowRight, User, Phone, CheckCircle2, ChevronRight, TrendingDown, TrendingUp, Minus, CalendarDays, ExternalLink
 } from 'lucide-react'
+import DefaultAvatar from '../components/DefaultAvatar'
 
 export default function Dashboard() {
   const navigate = useNavigate()
@@ -22,11 +23,16 @@ export default function Dashboard() {
   const { setActiveTab } = useContext(TabContext)
   const { dailyProperties, allProperties: allPropertiesData } = usePropertyData()
 
-  // Price ratings for the daily listings comparison
-  const priceRatings = useMemo(() => getAllPriceRatings(allPropertiesData), [allPropertiesData])
-
   // User's own portfolio size
   const myPortfolioCount = lists[MY_LISTINGS_ID]?.items?.length || 0
+
+  // Sample only 4 today's new listings for the dashboard grid
+  const featuredDailyListings = useMemo(() => {
+    return (dailyProperties || []).slice(0, 4)
+  }, [dailyProperties])
+
+  // Price ratings only for the 4 featured daily listings (O(k*n) instead of O(n²))
+  const priceRatings = useMemo(() => getRatingsForList(featuredDailyListings, allPropertiesData), [featuredDailyListings, allPropertiesData])
 
   // Date formatting for today
   const formattedDate = useMemo(() => {
@@ -61,11 +67,6 @@ export default function Dashboard() {
     return appointments.filter(app => app.status === 'bekliyor').length
   }, [appointments])
 
-  // Sample only 4 today's new listings for the dashboard grid
-  const featuredDailyListings = useMemo(() => {
-    return (dailyProperties || []).slice(0, 4)
-  }, [])
-
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-cream overflow-y-auto pb-10">
       {/* 1. Header Banner */}
@@ -79,11 +80,11 @@ export default function Dashboard() {
 
           <div className="relative z-10 flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-accent/20 border border-accent/20 flex-shrink-0 animate-pulse">
-              <img
-                src={user?.avatar || 'https://i.pravatar.cc/100?img=16'}
-                alt=""
-                className="w-12 h-12 rounded-xl object-cover"
-              />
+              {user?.avatar ? (
+                <img src={user.avatar} alt="" className="w-12 h-12 rounded-xl object-cover" />
+              ) : (
+                <DefaultAvatar className="w-12 h-12 rounded-xl" size={48} />
+              )}
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white">
@@ -293,7 +294,7 @@ export default function Dashboard() {
                 <div className="w-9 h-9 rounded-xl bg-purple-500/15 flex items-center justify-center mb-2 text-purple-500">
                   <Bot size={16} strokeWidth={2.5} />
                 </div>
-                <span className="text-[10px] font-black text-deep uppercase tracking-wider">AI Asistan</span>
+                <span className="text-[10px] font-black text-deep uppercase tracking-wider">FSBOAI</span>
               </button>
 
               <button
@@ -331,7 +332,7 @@ export default function Dashboard() {
                 <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent">
                   <Bot size={16} />
                 </div>
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-accent">FSBO AI Destek</span>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-accent">FSBOAI Destek</span>
               </div>
               <h3 className="text-sm font-extrabold mt-3 leading-snug">
                 Akıllı Fiyat Analizi ve Müşteri Eşleştirme Yapın
@@ -345,7 +346,7 @@ export default function Dashboard() {
               onClick={() => { setActiveTab('ai-asistan') }}
               className="relative z-10 w-full mt-4 py-2.5 rounded-xl text-[10px] font-black uppercase text-deep bg-accent hover:brightness-105 transition-all btn flex items-center justify-center gap-1.5 shadow-md shadow-accent/10"
             >
-              AI Asistanını Başlat
+              FSBOAI'yi Başlat
               <ArrowUpRight size={13} strokeWidth={3} />
             </button>
           </div>

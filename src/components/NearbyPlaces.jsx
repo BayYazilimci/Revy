@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react'
-import { Car, Footprints, Loader2, MapPin, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useState, useRef, useCallback } from 'react'
+import { Loader2, MapPin, ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react'
 import { useNearbyPlaces, CATEGORIES } from '../hooks/useNearbyPlaces'
+import { useDragScroll } from '../hooks/useDragScroll'
 
 const ICONS = {
   transport: (
@@ -65,19 +66,42 @@ const ICONS = {
   ),
 }
 
+const WalkIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="5" r="2"/>
+    <path d="M10 22V18L7 15l1-5 4 2 4-4 3 3"/>
+    <path d="m7 15 5-3"/>
+  </svg>
+)
+
+const CarIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+    <circle cx="7" cy="17" r="2"/>
+    <path d="M9 17h6"/>
+    <circle cx="17" cy="17" r="2"/>
+  </svg>
+)
+
 function PlaceCard({ category, onPlaceSelect, selectedPlace }) {
   const { places, label, color, iconType } = category
   if (!places?.length) return null
+
   return (
-    <div className="w-[260px] sm:w-[280px] shrink-0 rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+    <div className="w-[280px] shrink-0 overflow-hidden rounded-2xl border border-gray-200/80 bg-white sm:w-[300px]">
       <div className="flex items-center gap-3 p-4 pb-0">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white" style={{ backgroundColor: color }}>
+        <div
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white"
+          style={{ backgroundColor: color }}
+        >
           {ICONS[iconType]}
         </div>
-        <span className="min-w-0 flex-1 text-sm font-extrabold text-navy">{label}</span>
-        <span className="shrink-0 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-500">{places.length}</span>
+        <span className="min-w-0 flex-1 text-base font-semibold text-gray-900">{label}</span>
+        <span className="shrink-0 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-500">
+          {places.length}
+        </span>
       </div>
-      <div className="px-4 pt-3 pb-4" style={{ maxHeight: 280, overflowY: 'auto' }}>
+      <div className="overflow-y-auto px-4 pt-3 pb-4" style={{ maxHeight: 320 }}>
         {places.map((p, i) => {
           const isSelected = selectedPlace?.name === p.name && selectedPlace?.dist === p.dist
           return (
@@ -85,15 +109,25 @@ function PlaceCard({ category, onPlaceSelect, selectedPlace }) {
               key={i}
               type="button"
               onClick={() => onPlaceSelect?.(p)}
-              className={`w-full text-left py-2.5 btn ${i < places.length - 1 ? 'border-b border-gray-100' : ''} ${isSelected ? 'bg-accent/10 -mx-2 px-2 rounded-xl' : ''}`}
+              className={`w-full text-left py-3 border-b border-gray-100 last:border-0 last:pb-0 transition-colors ${
+                isSelected ? 'bg-gray-50 -mx-2 px-2 rounded-lg' : ''
+              }`}
             >
               <div className="flex items-start justify-between gap-2">
-                <span className={`min-w-0 flex-1 text-sm leading-snug ${isSelected ? 'font-extrabold text-navy' : 'text-gray-500'}`}>{p.name}</span>
-                <span className="shrink-0 text-sm font-bold text-navy">{p.distLabel}</span>
+                <span className={`min-w-0 flex-1 text-sm leading-5 ${isSelected ? 'font-semibold text-gray-900' : 'text-gray-600'}`}>
+                  {p.name}
+                </span>
+                <span className="shrink-0 text-sm font-semibold text-gray-900">{p.distLabel}</span>
               </div>
-              <div className="mt-1 flex items-center gap-3">
-                <span className="flex items-center gap-1 text-xs text-gray-400"><Footprints size={11} />{p.walk} dk</span>
-                <span className="flex items-center gap-1 text-xs text-gray-400"><Car size={11} />{p.car} dk</span>
+              <div className="mt-1.5 flex items-center gap-3">
+                <span className="flex items-center gap-1 text-xs text-gray-400">
+                  <WalkIcon />
+                  {p.walk} dk
+                </span>
+                <span className="flex items-center gap-1 text-xs text-gray-400">
+                  <CarIcon />
+                  {p.car} dk
+                </span>
               </div>
             </button>
           )
@@ -104,14 +138,21 @@ function PlaceCard({ category, onPlaceSelect, selectedPlace }) {
 }
 
 export default function NearbyPlaces({ coords, onPlaceSelect, selectedPlace }) {
-  const { data, loading, error } = useNearbyPlaces(coords)
   const scrollRef = useRef(null)
+  const { containerRef, handleMouseDown, handleMouseMove, handleMouseUp, handleMouseLeave, wasDragged, handleTouchStart, handleTouchMove, handleTouchEnd } = useDragScroll()
   const [activeFilters, setActiveFilters] = useState(new Set())
+  const [retryKey, setRetryKey] = useState(0)
+  const { data, loading, error, categories } = useNearbyPlaces(coords, retryKey)
+
+  const handleRetry = useCallback(() => {
+    setRetryKey(prev => prev + 1)
+  }, [])
 
   if (!coords) return null
 
   const loaded = CATEGORIES.filter(c => data[c.key]?.places?.length > 0)
   const visible = loaded.filter(c => activeFilters.size === 0 || activeFilters.has(c.key))
+  const hasErrors = CATEGORIES.some(c => data[c.key]?.error)
 
   const toggleFilter = (key) => {
     setActiveFilters(prev => {
@@ -126,19 +167,23 @@ export default function NearbyPlaces({ coords, onPlaceSelect, selectedPlace }) {
     scrollRef.current.scrollBy({ left: dir * 300, behavior: 'smooth' })
   }
 
+  const setRefs = (el) => {
+    scrollRef.current = el
+    containerRef.current = el
+  }
+
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 lg:p-6 animate-fade-up">
-      {/* Başlık */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-base font-extrabold text-navy flex items-center gap-2">
-          <MapPin size={16} className="text-gold" />
+        <h3 className="text-base font-extrabold text-gray-900 flex items-center gap-2">
+          <MapPin size={16} className="text-yellow-500" />
           Çevredeki Yerler
         </h3>
         {!loading && loaded.length > 0 && (
           <div className="flex items-center gap-2">
             <span className="text-[10px] text-gray-400 font-medium flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
-              Mapbox
+              {loaded.some(c => data[c.key]?.source === 'overpass') ? 'OpenStreetMap' : 'Mapbox'}
             </span>
             <button onClick={() => scroll(-1)} className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
               <ChevronLeft size={14} className="text-gray-500" />
@@ -158,22 +203,42 @@ export default function NearbyPlaces({ coords, onPlaceSelect, selectedPlace }) {
       )}
 
       {!loading && error && (
-        <p className="text-sm text-red-400 py-4">Veri yüklenemedi: {error}</p>
+        <div className="text-sm text-red-400 py-4 flex flex-col items-center gap-2">
+          <p>Veri yüklenemedi: {error}</p>
+          <button
+            onClick={handleRetry}
+            className="flex items-center gap-1 text-xs text-red-500 hover:text-red-600 underline"
+          >
+            <RefreshCw size={12} />
+            Tekrar Dene
+          </button>
+        </div>
       )}
 
       {!loading && !error && loaded.length === 0 && (
-        <p className="text-sm text-gray-400 py-4">Bu konuma yakın yer bulunamadı.</p>
+        <div className="text-sm text-gray-400 py-4 flex flex-col items-center gap-2">
+          <p>Bu konuma yakın yer bulunamadı.</p>
+          {hasErrors && (
+            <p className="text-xs text-gray-300">Bazı kategorilerde hata oluştu. Harita servisi ile bağlantı kurulamıyor olabilir.</p>
+          )}
+          <button
+            onClick={handleRetry}
+            className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-600 underline"
+          >
+            <RefreshCw size={12} />
+            Tekrar Dene
+          </button>
+        </div>
       )}
 
       {!loading && loaded.length > 0 && (
         <>
-          {/* Filtre çipleri */}
           <div className="flex gap-2 flex-wrap mb-4">
             <button
               onClick={() => setActiveFilters(new Set())}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
                 activeFilters.size === 0
-                  ? 'bg-navy text-white border-navy'
+                  ? 'bg-gray-900 text-white border-gray-900'
                   : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
               }`}
             >
@@ -198,14 +263,19 @@ export default function NearbyPlaces({ coords, onPlaceSelect, selectedPlace }) {
             ))}
           </div>
 
-          {/* Kartlar */}
           <div
-            ref={scrollRef}
-            className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            style={{ touchAction: 'pan-x' }}
+            ref={setRefs}
+            className="flex touch-pan-y gap-4 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            onMouseDown={(e) => { handleMouseDown(e) }}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {visible.map(cat => (
-              <PlaceCard key={cat.key} category={data[cat.key]} onPlaceSelect={onPlaceSelect} selectedPlace={selectedPlace} />
+              <PlaceCard key={cat.key} category={data[cat.key]} onPlaceSelect={(p) => { if (!wasDragged()) onPlaceSelect?.(p) }} selectedPlace={selectedPlace} />
             ))}
           </div>
         </>

@@ -29,7 +29,7 @@
 - Favori ilanlar
 
 ### 🤖 Yapay Zeka Özellikleri
-- **AI Asistan**: WhatsApp benzeri arayüzle AI destekli sohbet
+- **FSBOAI**: WhatsApp benzeri arayüzle AI destekli sohbet
 - **Ev Bulucu**: AI destekli akıllı ev eşleştirme
 - Claude API entegrasyonu (backend proxy üzerinden)
 

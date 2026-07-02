@@ -1,5 +1,4 @@
 export const APP_NAME = 'FSBO'
-export const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 export const ROUTES = {
   HOME: '/',
@@ -12,11 +11,20 @@ export const ROUTES = {
   CUSTOMERS: '/musteriler',
   CREATE_LISTING: '/ilan-olustur',
   AI_ASSISTANT: '/ai/asistan',
+  FSBO_AI: '/ai',
   EV_BULUCU: '/ai/ev-bulucu',
+  FSBO_GORSEL: '/ai/gorsel',
+  FSBO_VIDEO: '/ai/video',
+  FSBO_SANAL_TUR: '/ai/sanal-tur',
+  FSBO_3D: '/ai/3d-ev',
+  FSBO_DRONE: '/ai/drone',
   PROFILE_SETUP: '/profil-tamamla',
   DAILY: '/gunluk',
   APPOINTMENTS: '/randevular',
   ADMIN: '/admin',
+  WEBSITE_BUILDER: '/web-site-olustur',
+  WEBSITE_SETTINGS: '/web-site-ayarlar/:id',
+  PUBLISHED_SITE: '/site/:slug',
 }
 
 export const ROLES = {
@@ -70,7 +78,6 @@ export const CATEGORY_COLORS = {
   'Tümü': '#1e1b2e',
   'Satılık': '#059669',
   'Kiralık': '#3b82f6',
-
   'Villa': '#8b5cf6',
   'Daire': '#dc2626',
 }

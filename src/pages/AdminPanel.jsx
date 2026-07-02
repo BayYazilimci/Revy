@@ -11,6 +11,7 @@ import {
   Phone, Smartphone, Calendar, Lock, Unlock, ShieldOff, ArrowUpDown,
   Mail, Building2, ChevronRight, Wifi, Home, CalendarClock, Database
 } from 'lucide-react'
+import DefaultAvatar from '../components/DefaultAvatar'
 
 /* ------------------------------------------------------------------ */
 /*  Veriler gerçek backend'den gelir (/admin/overview, /admin/accounts) */
@@ -512,7 +513,11 @@ export default function AdminPanel() {
                 <LogOut size={13} strokeWidth={2.5} />
                 Uygulamaya Dön
               </button>
-              <img src={user?.avatar || 'https://i.pravatar.cc/100?img=16'} alt="" className="w-9 h-9 rounded-xl object-cover border border-white/10" />
+              {user?.avatar ? (
+                <img src={user.avatar} alt="" className="w-9 h-9 rounded-xl object-cover border border-white/10" />
+              ) : (
+                <DefaultAvatar className="w-9 h-9 rounded-xl border border-white/10" size={36} />
+              )}
               {/* Mobil menü düğmesi */}
               <button onClick={() => setMobileOpen(v => !v)}
                 className="md:hidden w-9 h-9 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-white">

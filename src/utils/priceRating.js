@@ -14,7 +14,7 @@
  * "₺12.000/ay"  → 12000
  */
 export function parsePrice(priceStr) {
-  if (!priceStr) return 0
+  if (!priceStr || typeof priceStr !== 'string') return 0
   // "/ay" gibi ekleri temizle
   const cleaned = priceStr.replace(/[₺\s]/g, '').replace(/\/ay$/, '')
   // Türk formatlı noktaları kaldır
@@ -46,6 +46,8 @@ function parseRooms(roomStr) {
  */
 function parseSize(sizeStr) {
   if (!sizeStr) return 0
+  if (typeof sizeStr === 'number') return Math.floor(sizeStr)
+  if (typeof sizeStr !== 'string') return 0
   const match = sizeStr.match(/(\d+)/)
   return match ? parseInt(match[1], 10) : 0
 }
@@ -188,6 +190,19 @@ export function getPriceRating(targetProp, allProperties) {
 export function getAllPriceRatings(allProperties) {
   const ratings = {}
   allProperties.forEach(prop => {
+    ratings[prop.id] = getPriceRating(prop, allProperties)
+  })
+  return ratings
+}
+
+/**
+ * Sadece belirli ilanlar için rating hesapla (performans için)
+ * @param {Array} targetProperties - Rating hesaplanacak ilanlar
+ * @param {Array} allProperties - Karşılaştırma havuzu (tüm ilanlar)
+ */
+export function getRatingsForList(targetProperties, allProperties) {
+  const ratings = {}
+  targetProperties.forEach(prop => {
     ratings[prop.id] = getPriceRating(prop, allProperties)
   })
   return ratings

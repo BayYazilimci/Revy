@@ -456,7 +456,7 @@ export default function MyListings() {
                   {/* HIDDEN PDF TEMPLATE */}
                   <div id={`pdf-template-${prop.id}`} style={{ position: 'fixed', left: 0, top: 0, width: '794px', zIndex: -1, opacity: 0.01, pointerEvents: 'none', background: '#fff', fontFamily: 'Plus Jakarta Sans, sans-serif', overflow: 'hidden' }}>
                     <div style={{ position: 'relative', width: '100%', height: '420px', overflow: 'hidden' }}>
-                      <img src={prop.img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                      <img src={prop.all_images && prop.all_images.length > 0 ? prop.all_images[0] : prop.img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 50%)' }} />
                       <div style={{ position: 'absolute', top: '28px', right: '28px', background: '#e3d10d', color: '#1e1b2e', padding: '6px 18px', borderRadius: '8px', fontWeight: 800, fontSize: '13px', letterSpacing: '1px' }}>REVY</div>
                       <div style={{ position: 'absolute', bottom: '32px', left: '32px' }}>

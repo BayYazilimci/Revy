@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useApp } from '../context/AppContext'
+import DefaultAvatar from '../components/DefaultAvatar'
 import Button from '../components/ui/Button'
 import Input from '../components/ui/Input'
 import { User, Lock, Camera, Check, X, Shield } from 'lucide-react'
@@ -72,11 +73,11 @@ export default function Profile() {
         <div className="flex items-center gap-5">
           <div className="relative">
             <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-cardBorder">
-              <img
-                src={avatarPreview || avatar || 'https://i.pravatar.cc/100?img=16'}
-                alt=""
-                className="w-full h-full object-cover"
-              />
+              {avatarPreview || avatar ? (
+                <img src={avatarPreview || avatar} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <DefaultAvatar className="w-full h-full" size={80} />
+              )}
             </div>
             <button
               onClick={() => fileRef.current?.click()}

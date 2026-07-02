@@ -1,53 +1,44 @@
 import { createContext, useContext, useState, useCallback, useEffect } from 'react'
+import { supabase } from '../lib/supabase'
 import { authApi } from '../api/auth'
-import { tokenStore } from '../api/tokenStore'
-
-const USER_CACHE_KEY = 'FSBO_user'
 
 const AuthContext = createContext(null)
 
-function readCachedUser() {
-  try {
-    const raw = localStorage.getItem(USER_CACHE_KEY)
-    return raw ? JSON.parse(raw) : null
-  } catch {
-    return null
-  }
-}
-
-function cacheUser(user) {
-  if (user) localStorage.setItem(USER_CACHE_KEY, JSON.stringify(user))
-  else localStorage.removeItem(USER_CACHE_KEY)
-}
-
 export function AuthProvider({ children }) {
-  // Hızlı ilk boyama için önbellekteki kullanıcı; ardından token ile doğrulanır
-  const [user, setUser] = useState(() => (tokenStore.getAccess() ? readCachedUser() : null))
+  const [user, setUser] = useState(null)
   const [authError, setAuthError] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user) {
+        try {
+          const profile = await authApi.me()
+          setUser(profile)
+        } catch {
+          setUser(null)
+        }
+      } else {
+        setUser(null)
+      }
+      setLoading(false)
+    })
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) setLoading(false)
+    })
+
+    return () => subscription?.unsubscribe()
+  }, [])
 
   const applyUser = useCallback((u) => {
     setUser(u)
-    cacheUser(u)
   }, [])
 
-  // Mount'ta token varsa oturumu backend'den doğrula/yenile
-  useEffect(() => {
-    let alive = true
-    if (!tokenStore.getAccess()) return
-    authApi.me().then((u) => {
-      if (!alive) return
-      if (u) applyUser(u)
-      else { applyUser(null); tokenStore.clear() }
-    })
-    return () => { alive = false }
-  }, [applyUser])
-
-  // Oturumu backend'den tazele (örn. hesap durumu admin tarafından değişmiş olabilir)
   const refreshUser = useCallback(async () => {
-    if (!tokenStore.getAccess()) return null
     const u = await authApi.me()
     if (u) applyUser(u)
-    else { applyUser(null); tokenStore.clear() }
+    else { applyUser(null); await supabase.auth.signOut() }
     return u
   }, [applyUser])
 
@@ -63,10 +54,10 @@ export function AuthProvider({ children }) {
     }
   }, [applyUser])
 
-  const register = useCallback(async ({ username, password, firstName, lastName }) => {
+  const register = useCallback(async ({ username, password, firstName, lastName, email }) => {
     setAuthError(null)
     try {
-      const { user: u, needsProfile } = await authApi.register({ username, password, firstName, lastName })
+      const { user: u, needsProfile } = await authApi.register({ username, password, firstName, lastName, email })
       applyUser(u)
       return { userData: u, needsProfile }
     } catch (err) {
@@ -98,9 +89,18 @@ export function AuthProvider({ children }) {
   }, [])
 
   const googleLogin = useCallback(async () => {
-    // Google OAuth backend tarafında henüz aktif değil (Faz 1 sonrası)
-    setAuthError('Google ile giriş yakında etkinleşecek. Lütfen kullanıcı adı/şifre ile giriş yapın.')
-    return false
+    setAuthError(null)
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.origin },
+      })
+      if (error) throw error
+      return true
+    } catch (err) {
+      setAuthError(err.message || 'Google ile giriş başarısız.')
+      return false
+    }
   }, [])
 
   const completeProfile = useCallback(async (profileData) => {
@@ -156,7 +156,7 @@ export function AuthProvider({ children }) {
   const subscribeToPlan = useCallback(async (planId) => {
     try {
       const sub = await authApi.subscribe(planId)
-      applyUser({ ...user, subscription: { planId: sub.planId, status: sub.status, since: sub.since, renewsAt: sub.renewsAt } })
+      applyUser({ ...user, subscription: { planId: sub.plan_id, status: sub.status, since: sub.since, renewsAt: sub.renews_at } })
       return true
     } catch {
       return false
@@ -179,7 +179,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{
-      user, isAuthenticated: !!user, authError,
+      user, isAuthenticated: !!user, authError, loading,
       login, register, logout, clearError, resetPassword, googleLogin, refreshUser,
       completeProfile, updateProfile, updatePassword,
       subscribeToPlan, cancelSubscription, getInvoices,

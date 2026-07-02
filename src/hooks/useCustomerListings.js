@@ -1,102 +1,100 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { customerListingsApi } from '../api/customerListings'
 
-export function useCustomerListings() {
-  const [associations, setAssociations] = useState({})
-  const [loading, setLoading] = useState(true)
+// Bellek içi önbellek: { [musteriId]: { [ilanId]: { not } } }
+let cache = {}
 
-  const fetch = useCallback(async () => {
-    setLoading(true)
+export function useCustomerListings() {
+  const [version, setVersion] = useState(0)
+  const [loadingFor, setLoadingFor] = useState(null)
+
+  const loadForCustomer = useCallback(async (musteriId) => {
+    if (!musteriId) return
+    setLoadingFor(musteriId)
     try {
-      const data = await customerListingsApi.getAll()
-      setAssociations(data)
-    } catch {
-      setAssociations({})
+      const list = await customerListingsApi.getForCustomer(musteriId)
+      cache = {
+        ...cache,
+        [musteriId]: Object.fromEntries(
+          list.map(a => [a.ilanId, { not: a.not || '' }])
+        ),
+      }
+      setVersion(v => v + 1)
     } finally {
-      setLoading(false)
+      setLoadingFor(null)
     }
   }, [])
 
-  useEffect(() => {
-    fetch()
-  }, [fetch])
-
   const associate = useCallback(async (musteriId, ilanId) => {
     await customerListingsApi.associate(musteriId, ilanId)
-    setAssociations(prev => {
-      const next = { ...prev }
-      if (!next[musteriId]) next[musteriId] = {}
-      next[musteriId] = { ...next[musteriId], [ilanId]: { not: '' } }
-      return next
-    })
+    cache = {
+      ...cache,
+      [musteriId]: {
+        ...(cache[musteriId] || {}),
+        [ilanId]: { not: '' },
+      },
+    }
+    setVersion(v => v + 1)
   }, [])
 
   const disassociate = useCallback(async (musteriId, ilanId) => {
     await customerListingsApi.disassociate(musteriId, ilanId)
-    setAssociations(prev => {
-      const next = { ...prev }
-      if (next[musteriId]) {
-        const rest = { ...next[musteriId] }
-        delete rest[ilanId]
-        if (Object.keys(rest).length === 0) {
-          delete next[musteriId]
-        } else {
-          next[musteriId] = rest
-        }
-      }
-      return next
-    })
+    if (cache[musteriId]) {
+      const rest = { ...cache[musteriId] }
+      delete rest[ilanId]
+      cache = Object.keys(rest).length === 0
+        ? { ...cache, [musteriId]: {} }
+        : { ...cache, [musteriId]: rest }
+    }
+    setVersion(v => v + 1)
   }, [])
 
   const updateNote = useCallback(async (musteriId, ilanId, not) => {
     await customerListingsApi.updateNote(musteriId, ilanId, not)
-    setAssociations(prev => {
-      if (!prev[musteriId]) return prev
-      return {
-        ...prev,
+    if (cache[musteriId]) {
+      cache = {
+        ...cache,
         [musteriId]: {
-          ...prev[musteriId],
-          [ilanId]: { not }
-        }
+          ...cache[musteriId],
+          [ilanId]: { not },
+        },
       }
-    })
+    }
+    setVersion(v => v + 1)
   }, [])
 
   const getCustomersForListing = useCallback((ilanId) => {
     const result = []
-    for (const musteriId of Object.keys(associations)) {
-      if (associations[musteriId][ilanId]) {
-        result.push({
-          musteriId,
-          not: associations[musteriId][ilanId].not,
-        })
+    for (const musteriId of Object.keys(cache)) {
+      if (cache[musteriId][ilanId]) {
+        result.push({ musteriId, not: cache[musteriId][ilanId].not })
       }
     }
     return result
-  }, [associations])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [version])
 
   const getListingsForCustomer = useCallback((musteriId) => {
-    const data = associations[musteriId]
+    const data = cache[musteriId]
     if (!data) return []
-    return Object.entries(data).map(([ilanId, val]) => ({
-      ilanId,
-      not: val.not,
-    }))
-  }, [associations])
+    return Object.entries(data).map(([ilanId, val]) => ({ ilanId, not: val.not }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [version])
 
   const isAssociated = useCallback((musteriId, ilanId) => {
-    return !!(associations[musteriId] && associations[musteriId][ilanId])
-  }, [associations])
+    return !!(cache[musteriId] && cache[musteriId][ilanId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [version])
 
   return {
-    associations,
-    loading,
+    loading: !!loadingFor,
+    loadingFor,
+    loadForCustomer,
     associate,
     disassociate,
     updateNote,
     getCustomersForListing,
     getListingsForCustomer,
     isAssociated,
-    refetch: fetch,
   }
 }

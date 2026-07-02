@@ -123,6 +123,7 @@ export default function Login() {
                       style={{ color: '#1e1b2e' }}
                       placeholder="Adınız"
                       value={firstName}
+                      required
                       onChange={e => setFirstName(e.target.value)}
                     />
                     {fieldErrors.firstName && <p className="text-xs text-red-400 font-medium mt-1">{fieldErrors.firstName}</p>}
@@ -135,6 +136,7 @@ export default function Login() {
                       style={{ color: '#1e1b2e' }}
                       placeholder="Soyadınız"
                       value={lastName}
+                      required
                       onChange={e => setLastName(e.target.value)}
                     />
                     {fieldErrors.lastName && <p className="text-xs text-red-400 font-medium mt-1">{fieldErrors.lastName}</p>}
@@ -150,6 +152,7 @@ export default function Login() {
                   placeholder={mode === 'login' ? 'Kullanıcı adınızı girin' : 'Bir kullanıcı adı belirleyin'}
                   value={username}
                   autoFocus
+                  required
                   onChange={e => { setUsername(e.target.value); clearError() }}
                 />
                 {fieldErrors.username && <p className="text-xs text-red-400 font-medium mt-1">{fieldErrors.username}</p>}
@@ -164,6 +167,7 @@ export default function Login() {
                     style={{ color: '#1e1b2e' }}
                     placeholder={mode === 'login' ? 'Şifrenizi girin' : 'Bir şifre belirleyin'}
                     value={password}
+                    required
                     onChange={e => { setPassword(e.target.value); clearError() }}
                   />
                   <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" onClick={() => setShowPassword(!showPassword)}>

@@ -42,7 +42,7 @@ export default function Landing() {
   // Interactive Simulator States
   const [hoveredPrice, setHoveredPrice] = useState(false)
   const [aiChatMessages, setAiChatMessages] = useState([
-    { sender: 'ai', text: 'Merhaba! Ben FSBO AI. Takip ettiğiniz emlaklar hakkında bilgi alabilir, pazar analizi isteyebilir veya randevularınızı sorgulayabilirsiniz. Size nasıl yardımcı olabilirim?' }
+    { sender: 'ai', text: 'Merhaba! Ben FSBOAI. Takip ettiğiniz emlaklar hakkında bilgi alabilir, pazar analizi isteyebilir veya randevularınızı sorgulayabilirsiniz. Size nasıl yardımcı olabilirim?' }
   ])
   const [aiTyping, setAiTyping] = useState(false)
   const [calendarAppointments, setCalendarAppointments] = useState([
@@ -131,8 +131,8 @@ export default function Landing() {
       a: 'FSBO, emlak danışmanları ve bireysel yatırımcılar için geliştirilmiş akıllı bir yönetim panelidir. Sahibi tarafından satılık/kiralık ilanları takip etmenizi, bunları harita üzerinde filtrelemenizi, portföyünüzünü yönetmenizi, randevularınızı çakışma kontrolüyle planlamanızı ve yapay zeka yardımıyla pazar analizi yapmanızı sağlar.'
     },
     {
-      q: 'Yapay zeka asistanı (FSBO AI) hangi konularda yardımcı olur?',
-      a: 'FSBO AI, bölge bazlı fiyat analizleri yapabilir, yeni oluşturduğunuz ilanlar için SEO uyumlu ve yüksek dönüşümlü ilan açıklamaları yazabilir, portföyünüzdeki mülklere en uygun alıcı/kiracı müşteri adaylarını eşleştirebilir.'
+      q: 'Yapay zeka asistanı (FSBOAI) hangi konularda yardımcı olur?',
+      a: 'FSBOAI, bölge bazlı fiyat analizleri yapabilir, yeni oluşturduğunuz ilanlar için SEO uyumlu ve yüksek dönüşümlü ilan açıklamaları yazabilir, portföyünüzdeki mülklere en uygun alıcı/kiracı müşteri adaylarını eşleştirebilir.'
     },
     {
       q: 'Randevu takvimindeki çakışma tespiti nasıl çalışır?',
@@ -276,7 +276,7 @@ export default function Landing() {
                 Yönetin!
               </h1>
               <p className="text-base sm:text-lg text-gray-500 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
-                FSBO ile ilanlarınızı harita üzerinde konumlandırın, yapay zekalı asistanla pazar analizi çıkartın ve randevu takviminizi akıllı çakışma tespiti ile sıfır hata ile planlayın.
+                FSBO ile ilanlarınızı harita üzerinde konumlandırın, FSBOAI ile pazar analizi çıkartın ve randevu takviminizi akıllı çakışma tespiti ile sıfır hata ile planlayın.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                 <button
@@ -343,7 +343,7 @@ export default function Landing() {
                         <div className="w-6 h-6 rounded-lg bg-accent flex items-center justify-center text-deep">
                           <Bot size={12} strokeWidth={2.5} />
                         </div>
-                        <span className="text-xs font-extrabold tracking-tight">AI Asistan Önerisi</span>
+                        <span className="text-xs font-extrabold tracking-tight">FSBOAI Önerisi</span>
                       </div>
                       <span className="text-[8px] font-bold text-accent/80 uppercase">Valuation Engine</span>
                     </div>
@@ -430,7 +430,7 @@ export default function Landing() {
               <div className="w-12 h-12 rounded-2xl bg-violet-100 flex items-center justify-center text-violet-600 group-hover:scale-110 transition-transform mb-6">
                 <Bot size={22} strokeWidth={2.5} />
               </div>
-              <h4 className="text-lg font-black text-deep mb-3">Yapay Zekalı AI Asistan</h4>
+              <h4 className="text-lg font-black text-deep mb-3">FSBOAI</h4>
               <p className="text-sm text-gray-400 font-semibold leading-relaxed">
                 Asistanınızla sohbet ederek bölge fiyat analizleri alın, portföyünüzdeki mülklere en uygun alıcıları eşleştirin ve saniyeler içinde yüksek etkileşimli ilan metinleri yazdırın.
               </p>
@@ -599,7 +599,7 @@ export default function Landing() {
                       <Bot size={16} strokeWidth={2.5} />
                     </div>
                     <div>
-                      <h5 className="text-xs font-black">FSBO Yapay Zeka</h5>
+                      <h5 className="text-xs font-black">FSBOAI</h5>
                       <span className="text-[8px] font-semibold text-accent/80">Çevrimiçi Emlak Danışmanı</span>
                     </div>
                   </div>

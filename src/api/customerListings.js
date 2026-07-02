@@ -1,57 +1,82 @@
-const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false'
+import { supabase } from './supabase'
 
-// { [musteriId]: { [ilanId]: { not: string } } }
-let mockAssociations = {
-  'c1': { p1: { not: 'Bu ilanla çok ilgilendi, tekrar arayın.' }, p3: { not: '' } },
-  'c2': { p2: { not: 'Yarın gezmeye gelecek.' } },
+function toClientAssociation(raw) {
+  if (!raw) return null
+  return {
+    id: raw.id,
+    customerId: raw.customer_id,
+    propertyId: raw.property_id,
+    ilanId: raw.property_id,
+    not: raw.relation || '',
+    property: raw.property || null,
+    customer_id: undefined,
+    property_id: undefined,
+  }
 }
 
 export const customerListingsApi = {
-  async getAll() {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 30))
-      return JSON.parse(JSON.stringify(mockAssociations))
-    }
-    return []
+  async getForCustomer(musteriId) {
+    const { data, error } = await supabase
+      .from('customer_listings')
+      .select('*, property:properties(*)')
+      .eq('customer_id', musteriId)
+    if (error) throw new Error(error.message)
+    return Array.isArray(data) ? data.map(toClientAssociation) : []
   },
 
   async associate(musteriId, ilanId) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 50))
-      if (!mockAssociations[musteriId]) {
-        mockAssociations[musteriId] = {}
-      }
-      if (!mockAssociations[musteriId][ilanId]) {
-        mockAssociations[musteriId][ilanId] = { not: '' }
-      }
-      return { musteriId, ilanId, not: '' }
-    }
-    return null
+    const { data: existing } = await supabase
+      .from('customer_listings')
+      .select('id')
+      .eq('customer_id', musteriId)
+      .eq('property_id', ilanId)
+      .maybeSingle()
+
+    if (existing) return toClientAssociation(existing)
+
+    const { data, error } = await supabase
+      .from('customer_listings')
+      .insert({ customer_id: musteriId, property_id: ilanId })
+      .select()
+      .single()
+    if (error) throw new Error(error.message)
+    return toClientAssociation(data)
   },
 
   async disassociate(musteriId, ilanId) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 40))
-      if (mockAssociations[musteriId]) {
-        delete mockAssociations[musteriId][ilanId]
-        if (Object.keys(mockAssociations[musteriId]).length === 0) {
-          delete mockAssociations[musteriId]
-        }
-      }
-      return { success: true }
-    }
-    return null
+    const { error } = await supabase
+      .from('customer_listings')
+      .delete()
+      .eq('customer_id', musteriId)
+      .eq('property_id', ilanId)
+    if (error) throw new Error(error.message)
   },
 
   async updateNote(musteriId, ilanId, not) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 40))
-      if (!mockAssociations[musteriId]) {
-        mockAssociations[musteriId] = {}
-      }
-      mockAssociations[musteriId][ilanId] = { not }
-      return { musteriId, ilanId, not }
+    const { data: existing } = await supabase
+      .from('customer_listings')
+      .select('id')
+      .eq('customer_id', musteriId)
+      .eq('property_id', ilanId)
+      .maybeSingle()
+
+    if (existing) {
+      const { data, error } = await supabase
+        .from('customer_listings')
+        .update({ relation: not })
+        .eq('id', existing.id)
+        .select()
+        .single()
+      if (error) throw new Error(error.message)
+      return toClientAssociation(data)
     }
-    return null
+
+    const { data, error } = await supabase
+      .from('customer_listings')
+      .insert({ customer_id: musteriId, property_id: ilanId, relation: not })
+      .select()
+      .single()
+    if (error) throw new Error(error.message)
+    return toClientAssociation(data)
   },
 }

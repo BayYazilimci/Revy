@@ -1,9 +1,10 @@
-import { useState, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
-import { TabContext } from '../App'
+import { TabContext } from '../context/TabContext'
+import { notificationsApi } from '../api/notifications'
 import {
-  Compass, Heart, Bell, Home, Sun, Calendar, Bot, Bookmark, Users, User, Plus, Building2
+  Compass, Heart, Bell, Home, Sun, Calendar, Bot, Bookmark, Users, User, Plus, Building2, Globe, Settings, Image, Film, Eye, Layers, Plane, Search
 } from 'lucide-react'
 import NotificationPopup from './ui/NotificationPopup'
 
@@ -12,11 +13,38 @@ export default function Header() {
   const { addToast } = useApp()
   const { activeTab } = useContext(TabContext)
   const [notifOpen, setNotifOpen] = useState(false)
+  const [notifications, setNotifications] = useState([])
+
+  useEffect(() => {
+    notificationsApi.getAll().then(setNotifications).catch(() => {})
+  }, [])
+
+  const handleMarkRead = async (id) => {
+    try { await notificationsApi.markRead(id) } catch {}
+  }
+
+  const handleMarkAllRead = async () => {
+    try { await notificationsApi.markAllRead() } catch {}
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })))
+  }
+
+  const handleDelete = async (id) => {
+    setNotifications(prev => prev.filter(n => n.id !== id))
+  }
 
   const getPageIcon = () => {
     if (location.pathname === '/favoriler') return Heart
     if (location.pathname === '/ilan-olustur') return Plus
     if (location.pathname.startsWith('/ilan/')) return Building2
+    if (location.pathname === '/web-site-olustur') return Globe
+    if (location.pathname.startsWith('/web-site-ayarlar/')) return Settings
+    if (location.pathname === '/ai') return Bot
+    if (location.pathname === '/ai/ev-bulucu') return Search
+    if (location.pathname === '/ai/gorsel') return Image
+    if (location.pathname === '/ai/video') return Film
+    if (location.pathname === '/ai/sanal-tur') return Eye
+    if (location.pathname === '/ai/3d-ev') return Layers
+    if (location.pathname === '/ai/drone') return Plane
     
     switch (activeTab) {
       case 'anasayfa': return Home
@@ -36,13 +64,22 @@ export default function Header() {
     if (location.pathname === '/favoriler') return { title: 'Listelerim', subtitle: 'Favori Listeleri' }
     if (location.pathname === '/ilan-olustur') return { title: 'Yeni İlan', subtitle: 'Portföye Ekle' }
     if (location.pathname.startsWith('/ilan/')) return { title: 'İlan Detayı', subtitle: 'Detaylı İnceleme' }
+    if (location.pathname === '/web-site-olustur') return { title: 'Web Sitesi Kurucu', subtitle: 'Şablon ile Web Sitesi Oluştur' }
+    if (location.pathname.startsWith('/web-site-ayarlar/')) return { title: 'Site Ayarları', subtitle: 'Domain & SEO Ayarları' }
+    if (location.pathname === '/ai') return { title: 'FSBOAI', subtitle: 'Tüm AI Araçları' }
+    if (location.pathname === '/ai/ev-bulucu') return { title: 'Ev Bulucu', subtitle: 'AI Destekli Ev Arama' }
+    if (location.pathname === '/ai/gorsel') return { title: 'Görsel Oluştur', subtitle: 'AI ile Emlak Görseli' }
+    if (location.pathname === '/ai/video') return { title: 'Video Oluştur', subtitle: 'AI ile Tanıtım Videosu' }
+    if (location.pathname === '/ai/sanal-tur') return { title: 'Sanal Tur', subtitle: '360° Sanal Tur' }
+    if (location.pathname === '/ai/3d-ev') return { title: '3D Modelleme', subtitle: '3D Ev Modelleme' }
+    if (location.pathname === '/ai/drone') return { title: 'Drone Çekimi', subtitle: 'Hava Görüntüleme' }
     
     switch (activeTab) {
       case 'anasayfa': return { title: 'Ana Sayfa', subtitle: 'Emlak Paneli Özet' }
       case 'kesfet': return { title: 'Keşfet', subtitle: 'Tüm Emlaklar' }
       case 'gunluk': return { title: 'Günlük', subtitle: 'Son 24 Saatlik İlanlar' }
       case 'randevular': return { title: 'Randevular', subtitle: 'Takvim ve Görüşmeler' }
-      case 'ai-asistan': return { title: 'AI Asistan', subtitle: 'Yapay Zekâ Desteği' }
+      case 'ai-asistan': return { title: 'FSBOAI', subtitle: 'FSBOAI Desteği' }
       case 'ilanlarim': return { title: 'Portföyüm', subtitle: 'Portföy İlanlarım' }
       case 'listeler': return { title: 'Listelerim', subtitle: 'Kaydettiğim İlanlar' }
       case 'musteriler': return { title: 'Müşteriler', subtitle: 'Müşteri Yönetimi' }
@@ -82,7 +119,14 @@ export default function Header() {
           </div>
         </div>
       </header>
-      <NotificationPopup isOpen={notifOpen} onClose={() => setNotifOpen(false)} />
+      <NotificationPopup
+        isOpen={notifOpen}
+        onClose={() => setNotifOpen(false)}
+        notifications={notifications}
+        onMarkRead={handleMarkRead}
+        onMarkAllRead={handleMarkAllRead}
+        onDelete={handleDelete}
+      />
     </>
   )
 }

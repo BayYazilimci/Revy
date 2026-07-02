@@ -18,46 +18,18 @@ const COLOR_MAP = {
   calendar: '#e3d10d',
 }
 
-const SAMPLE_NOTIFICATIONS = [
-  { id: 'n1', type: 'like', title: 'Yeni Beğeni', description: 'Ayşe Yılmaz, "Boğaz manzaralı daire" ilanınızı beğendi.', time: '2 dk önce', read: false },
-  { id: 'n2', type: 'save', title: 'Kaydedilen İlan', description: '"Sahil köşkü" ilanınız bir listeye kaydedildi.', time: '15 dk önce', read: false },
-  { id: 'n3', type: 'alert', title: 'Fiyat Düşüşü', description: '"Merkez ofis" ilanının fiyatı %10 düştü.', time: '1 saat önce', read: false },
-  { id: 'n4', type: 'system', title: 'Hoş Geldiniz', description: 'Revy\'ye hoş geldiniz! İlanları keşfetmeye başlayın.', time: '1 gün önce', read: true },
-]
-
-const NOTIF_STORAGE_KEY = 'fsbo_notifications'
-
-const loadNotifications = () => {
-  const stored = localStorage.getItem(NOTIF_STORAGE_KEY)
-  if (stored) {
-    try {
-      return JSON.parse(stored)
-    } catch (e) {}
-  }
-  localStorage.setItem(NOTIF_STORAGE_KEY, JSON.stringify(SAMPLE_NOTIFICATIONS))
-  return SAMPLE_NOTIFICATIONS
-}
-
-const saveNotifications = (notifs) => {
-  localStorage.setItem(NOTIF_STORAGE_KEY, JSON.stringify(notifs))
-}
-
-export default function NotificationPopup({ isOpen, onClose, notifications: externalNotifications }) {
-  const [notifications, setNotifications] = useState(() => loadNotifications())
+export default function NotificationPopup({ isOpen, onClose, notifications: externalNotifications, onMarkRead, onMarkAllRead, onDelete }) {
+  const [notifications, setNotifications] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (isOpen) {
-      setNotifications(loadNotifications())
+    if (isOpen && externalNotifications) {
+      setNotifications(externalNotifications)
+      setLoading(false)
     }
-  }, [isOpen])
+  }, [isOpen, externalNotifications])
 
-  useEffect(() => {
-    if (!externalNotifications) {
-      saveNotifications(notifications)
-    }
-  }, [notifications, externalNotifications])
-
-  const items = externalNotifications || notifications
+  const items = notifications
   const unreadCount = items.filter(n => !n.read).length
 
   useEffect(() => {
@@ -78,19 +50,23 @@ export default function NotificationPopup({ isOpen, onClose, notifications: exte
   }, [isOpen, onClose])
 
   const markAllRead = () => {
+    if (onMarkAllRead) onMarkAllRead()
     setNotifications(prev => prev.map(n => ({ ...n, read: true })))
   }
 
   const markAsRead = (id) => {
+    if (onMarkRead) onMarkRead(id)
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n))
   }
 
   const deleteNotification = (id, e) => {
     e.stopPropagation()
+    if (onDelete) onDelete(id)
     setNotifications(prev => prev.filter(n => n.id !== id))
   }
 
   const clearAll = () => {
+    if (onDelete) notifications.forEach(n => onDelete(n.id))
     setNotifications([])
   }
 

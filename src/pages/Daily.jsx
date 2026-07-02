@@ -29,7 +29,9 @@ export default function Daily() {
   const mapContainer = useRef(null)
   const map = useRef(null)
   const { dailyProperties, allProperties: allPropertiesData } = usePropertyData()
-  const [activeZone] = useState(ZONES[0])
+  const [activeZone, setActiveZone] = useState(ZONES[0])
+  const [zoneDropdownOpen, setZoneDropdownOpen] = useState(false)
+  const zoneDropdownRef = useRef(null)
   const [selectedId, setSelectedId] = useState(null)
   const properties = dailyProperties
   const markersRef = useRef([])
@@ -208,6 +210,16 @@ export default function Daily() {
   }, [filteredProperties, mapLoaded, navigate])
 
   useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (zoneDropdownRef.current && !zoneDropdownRef.current.contains(e.target)) {
+        setZoneDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  useEffect(() => {
     document.querySelectorAll('.daily-marker').forEach(el => {
       const inner = el.querySelector('.daily-marker-inner')
       if (inner) inner.classList.toggle('is-active', el.dataset.id === selectedId)
@@ -235,10 +247,40 @@ export default function Daily() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold" style={{ background: 'rgba(255,255,255,.15)', backdropFilter: 'blur(8px)', color: '#fff' }}>
-              <MapPin size={12} />
-              <span>{activeZone}</span>
-              <ChevronDown size={10} className="text-white/50" />
+            <div ref={zoneDropdownRef} className="relative">
+              <button
+                onClick={() => setZoneDropdownOpen(!zoneDropdownOpen)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all duration-200 hover:brightness-110"
+                style={{ background: 'rgba(255,255,255,.15)', backdropFilter: 'blur(8px)', color: '#fff' }}
+              >
+                <MapPin size={12} />
+                <span>{activeZone}</span>
+                <ChevronDown size={10} className={`text-white/50 transition-transform duration-200 ${zoneDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {zoneDropdownOpen && (
+                <div
+                  className="absolute top-full right-0 mt-1.5 rounded-xl border overflow-hidden shadow-xl z-50 min-w-[180px] animate-slide-down"
+                  style={{ background: 'rgba(30,27,46,.95)', borderColor: 'rgba(255,255,255,.12)', backdropFilter: 'blur(16px)' }}
+                >
+                  {ZONES.map(zone => (
+                    <button
+                      key={zone}
+                      onClick={() => { setActiveZone(zone); setZoneDropdownOpen(false) }}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold transition-all duration-150"
+                      style={{
+                        color: zone === activeZone ? '#e3d10d' : 'rgba(255,255,255,.7)',
+                        background: zone === activeZone ? 'rgba(227,209,13,.1)' : 'transparent',
+                      }}
+                      onMouseEnter={e => { if (zone !== activeZone) e.target.style.background = 'rgba(255,255,255,.06)' }}
+                      onMouseLeave={e => { if (zone !== activeZone) e.target.style.background = 'transparent' }}
+                    >
+                      <MapPin size={11} />
+                      {zone}
+                      {zone === activeZone && <span className="ml-auto text-[10px]" style={{ color: '#e3d10d' }}>✓</span>}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold" style={{ background: 'rgba(227,209,13,.2)', backdropFilter: 'blur(8px)', color: '#e3d10d' }}>
               <Clock size={12} />

@@ -1,102 +1,86 @@
-import { apiClient } from './client'
+import { supabase } from './supabase'
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false'
-
-let mockCustomers = {
-  'c1': {
-    id: 'c1', ad: 'Ahmet', soyad: 'Yılmaz',
-    email: 'ahmet.yilmaz@email.com', telefon: '0532 111 22 33',
-    sirket: 'Yılmaz İnşaat', sektor: 'İnşaat',
-    notlar: 'VIP müşteri, düzenli iletişim halinde.',
-    createdAt: '2026-05-15T10:30:00Z'
-  },
-  'c2': {
-    id: 'c2', ad: 'Ayşe', soyad: 'Demir',
-    email: 'ayse.demir@email.com', telefon: '0533 444 55 66',
-    sirket: 'Demir Gayrimenkul', sektor: 'Gayrimenkul',
-    notlar: 'Portföy yönetimi için görüşülüyor.',
-    createdAt: '2026-05-20T14:00:00Z'
-  },
-  'c3': {
-    id: 'c3', ad: 'Mehmet', soyad: 'Kaya',
-    email: 'mehmet.kaya@email.com', telefon: '0535 777 88 99',
-    sirket: 'Kaya Holding', sektor: 'Finans',
-    notlar: '',
-    createdAt: '2026-06-01T09:15:00Z'
-  },
-  'c4': {
-    id: 'c4', ad: 'Zeynep', soyad: 'Çelik',
-    email: 'zeynep.celik@email.com', telefon: '0538 999 00 11',
-    sirket: 'Çelik Tekstil', sektor: 'Tekstil',
-    notlar: 'Yeni proje için potansiyel yatırımcı.',
-    createdAt: '2026-06-05T11:45:00Z'
-  },
-  'c5': {
-    id: 'c5', ad: 'Ali', soyad: 'Öztürk',
-    email: 'ali.ozturk@email.com', telefon: '0531 222 33 44',
-    sirket: 'Öztürk Otomotiv', sektor: 'Otomotiv',
-    notlar: '',
-    createdAt: '2026-06-10T16:30:00Z'
-  },
+function toClient(c) {
+  if (!c) return null
+  let extra = {}
+  try { extra = c.notes ? JSON.parse(c.notes) : {} } catch { }
+  const nameParts = (c.name || '').split(' ')
+  return {
+    id: c.id,
+    ad: nameParts[0] || '',
+    soyad: nameParts.slice(1).join(' ') || '',
+    email: c.email || '',
+    telefon: c.phone || '',
+    sirket: extra.sirket || '',
+    sektor: extra.sektor || '',
+    notlar: extra.notlar || '',
+    createdAt: c.created_at,
+    ownerId: c.owner_id,
+    created_at: undefined,
+    owner_id: undefined,
+  }
 }
 
-let mockCounter = 0
+function toServer(data) {
+  const name = [data.ad, data.soyad].filter(Boolean).join(' ')
+  const extra = { sirket: data.sirket || '', sektor: data.sektor || '', notlar: data.notlar || '' }
+  const notesStr = Object.values(extra).some(v => v) ? JSON.stringify(extra) : undefined
+  return {
+    name,
+    email: data.email || undefined,
+    phone: data.telefon || undefined,
+    notes: notesStr,
+  }
+}
 
 export const customersApi = {
   async getAll() {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 50))
-      return Object.values(mockCustomers)
-    }
-    return apiClient.get('/customers')
+    const { data, error } = await supabase
+      .from('customers')
+      .select('*')
+      .order('created_at', { ascending: false })
+    if (error) throw new Error(error.message)
+    return Array.isArray(data) ? data.map(toClient) : []
   },
 
   async getById(id) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 30))
-      return mockCustomers[id] || null
-    }
-    return apiClient.get(`/customers/${id}`)
+    const { data, error } = await supabase
+      .from('customers')
+      .select('*')
+      .eq('id', id)
+      .single()
+    if (error) throw new Error(error.message)
+    return toClient(data)
   },
 
   async create(data) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 100))
-      const id = 'c' + Date.now().toString(36) + (mockCounter++).toString(36)
-      const customer = {
-        id,
-        ad: data.ad,
-        soyad: data.soyad,
-        email: data.email || '',
-        telefon: data.telefon || '',
-        sirket: data.sirket || '',
-        sektor: data.sektor || '',
-        notlar: data.notlar || '',
-        createdAt: new Date().toISOString(),
-      }
-      mockCustomers[id] = customer
-      return customer
-    }
-    return apiClient.post('/customers', data)
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) throw new Error('Oturum bulunamadı.')
+    const { data: result, error } = await supabase
+      .from('customers')
+      .insert({ ...toServer(data), owner_id: session.user.id })
+      .select()
+      .single()
+    if (error) throw new Error(error.message)
+    return toClient(result)
   },
 
   async update(id, data) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 80))
-      if (!mockCustomers[id]) throw new Error('Müşteri bulunamadı')
-      mockCustomers[id] = { ...mockCustomers[id], ...data }
-      return mockCustomers[id]
-    }
-    return apiClient.put(`/customers/${id}`, data)
+    const { data: result, error } = await supabase
+      .from('customers')
+      .update({ ...toServer(data), updated_at: new Date().toISOString() })
+      .eq('id', id)
+      .select()
+      .single()
+    if (error) throw new Error(error.message)
+    return toClient(result)
   },
 
   async delete(id) {
-    if (USE_MOCK) {
-      await new Promise(r => setTimeout(r, 80))
-      if (!mockCustomers[id]) throw new Error('Müşteri bulunamadı')
-      delete mockCustomers[id]
-      return { success: true }
-    }
-    return apiClient.delete(`/customers/${id}`)
+    const { error } = await supabase
+      .from('customers')
+      .delete()
+      .eq('id', id)
+    if (error) throw new Error(error.message)
   },
 }

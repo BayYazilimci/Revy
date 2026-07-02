@@ -5,14 +5,6 @@ export const CATEGORIES = ['Tümü', 'Satılık', 'Kiralık', 'Villa', 'Daire']
 
 const PropertiesContext = createContext(null)
 
-/**
- * Tüm ilan verisini gerçek backend'den (/properties) bir kez yükler ve
- * frontend'in beklediği türevleri sağlar:
- *  - properties      : id → ilan haritası
- *  - propertyList    : keşfet listesi (sıralı)
- *  - dailyProperties : günün ilanları
- *  - allProperties   : tüm ilanlar (dizi)
- */
 export function PropertiesProvider({ children }) {
   const [list, setList] = useState([])
   const [loading, setLoading] = useState(true)

@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCustomers } from '../hooks/useCustomers'
 import { useCustomerListings } from '../hooks/useCustomerListings'
 import { useApp } from '../context/AppContext'
-import { TabContext } from '../App'
+import { TabContext } from '../context/TabContext'
 import { usePropertyData } from '../context/PropertiesContext'
 import { MY_LISTINGS_ID } from '../data/lists'
 import {
@@ -26,9 +26,20 @@ const initialForm = {
 export default function Customers() {
   const navigate = useNavigate()
   const { properties } = usePropertyData()
-  const { setActiveTab, setTabParams } = useContext(TabContext)
+  const tabCtx = useContext(TabContext) || {}
+  const setActiveTab = tabCtx.setActiveTab || (() => {})
+  const setTabParams = tabCtx.setTabParams || (() => {})
   const { customers, loading, create, update, remove } = useCustomers()
-  const { getListingsForCustomer, associate, disassociate } = useCustomerListings()
+  const { getListingsForCustomer, associate, disassociate, loadForCustomer } = useCustomerListings()
+  const loadedRef = useRef(false)
+
+  // Müşteriler yüklendiğinde tüm ilişkileri arka planda yükle
+  useEffect(() => {
+    if (customers.length > 0 && !loadedRef.current) {
+      loadedRef.current = true
+      customers.forEach(c => loadForCustomer(c.id))
+    }
+  }, [customers, loadForCustomer])
   const { addToast, lists } = useApp()
 
   const [search, setSearch] = useState('')
@@ -290,7 +301,12 @@ export default function Customers() {
                         <div className="flex items-center justify-between">
                           <button
                             className={`flex items-center gap-1.5 text-[10px] font-bold btn ${listings.length > 0 ? 'text-gray-500 hover:text-gray-700' : 'text-gray-400'}`}
-                            onClick={() => listings.length > 0 && setExpandedCust(isExpanded ? null : customer.id)}
+                            onClick={() => {
+                              if (listings.length > 0) {
+                                setExpandedCust(isExpanded ? null : customer.id)
+                                loadForCustomer(customer.id)
+                              }
+                            }}
                           >
                             {listings.length > 0 ? (isExpanded ? <ChevronDown size={12} /> : <ChevronRight size={12} />) : <Home size={12} />}
                             {listings.length > 0 ? `İlişkili İlanlar (${listings.length})` : 'İlan İlişkilendir'}
